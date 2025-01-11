@@ -11,7 +11,7 @@ namespace UI::CustomWidgets
         Q_OBJECT
 
     public:
-        explicit ElementView(Core::Circuit::ElementType type, QGraphicsItem *parent = nullptr);
+        explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, QGraphicsItem *parent = nullptr);
 
         QRectF boundingRect() const override;
 
@@ -21,6 +21,10 @@ namespace UI::CustomWidgets
     private:
         Core::Circuit::ElementType m_type;
         QPixmap *m_pixmap;
+        int m_inputPortsCount;
+
+        void addPorts();
+        void updatePortsPosition();
     };
 }
 #endif // ELEMENTVIEW_H

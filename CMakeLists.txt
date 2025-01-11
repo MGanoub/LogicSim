@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/Widgets/draggableLabel.h UI/Widgets/draggableLabel.cpp
         UI/Widgets/elementView.h UI/Widgets/elementView.cpp
         Core/Circuit/elementTypeEnum.h
+        UI/Widgets/elementPort.h UI/Widgets/elementPort.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

@@ -61,7 +61,7 @@ namespace UI
         event->accept();
 
         QPixmap pixmap(":/inputs/VCC.png");
-        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC);
+        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 2);
         elementView->setPixmap(":/inputs/VCC.png");
         elementView->setPos(pos);
         m_scene->addItem(elementView);
