@@ -14,15 +14,20 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        UI/mainwindow.cpp
+        UI/mainwindow.h
+        UI/Forms/mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(LogicSim
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        UI/Widgets/scenewidget.h UI/Widgets/scenewidget.cpp
+        UI/Widgets/listitemwidget.h UI/Widgets/listitemwidget.cpp
+        Resources/resources.qrc
+        Resources/inputs/buttonOn.png
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LogicSim APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
