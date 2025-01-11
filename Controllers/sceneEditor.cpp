@@ -1,6 +1,7 @@
 #include "sceneEditor.h"
+#include "../UI/Widgets/elementView.h"
+#include "../UI/mainwindow.h"
 #include <QEvent>
-#include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QIODevice>
@@ -9,10 +10,14 @@
 namespace UI
 {
 
-    SceneEditor::SceneEditor(QObject *parent, QGraphicsScene *scene)
-        : QObject(parent), m_scene(scene)
+    SceneEditor::SceneEditor(QObject *parent)
+        : QObject(parent)
     {
+        m_scene = new CustomWidgets::sceneWidget(this);
+        m_scene->setBackgroundBrush(QColor("#ffffe6"));
         m_scene->installEventFilter(this);
+        auto *window = qobject_cast<MainWindow *>(this->parent());
+        window->updateGraphicView(m_scene);
     }
 
     bool SceneEditor::eventFilter(QObject *obj, QEvent *evt)
@@ -56,12 +61,12 @@ namespace UI
         event->accept();
 
         QPixmap pixmap(":/inputs/VCC.png");
-        auto *graphicPixmap = new QGraphicsPixmapItem(pixmap);
-        graphicPixmap->setOffset(pos);
-        graphicPixmap->setFlag(QGraphicsItem::ItemIsMovable);
-        graphicPixmap->setVisible(true);
-        m_scene->addItem(graphicPixmap);
-        m_scene->update();
+        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC);
+        elementView->setPixmap(":/inputs/VCC.png");
+        elementView->setPos(pos);
+        m_scene->addItem(elementView);
+        auto *window = qobject_cast<MainWindow *>(this->parent());
+        window->refresh();
         return true;
     }
 }

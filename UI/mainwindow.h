@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "../Controllers/sceneEditor.h"
 #include <QMainWindow>
 #include <qgraphicsscene.h>
-#include "../Controllers/sceneEditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -25,11 +25,13 @@ public:
     ~MainWindow();
 
     QGraphicsScene *getSceneWidget();
+    void updateGraphicView(QGraphicsScene *scene);
+    void refresh();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *m_scene;
-    UI::SceneEditor* m_editor;
+    UI::SceneEditor *m_editor;
 
     void populateComponentsMenu();
     void UpdateGraphicViewScene();

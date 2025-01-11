@@ -19,10 +19,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::UpdateGraphicViewScene()
 {
+    /*
     m_scene = new UI::CustomWidgets::sceneWidget(this);
     m_scene->setBackgroundBrush(QColor("#ffffe6"));
     ui->graphicsView->setScene(m_scene);
-    m_editor = new UI::SceneEditor(this, m_scene);
+    */
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    m_editor = new UI::SceneEditor(this);
 }
 
 void MainWindow::populateComponentsMenu()
@@ -39,13 +42,21 @@ void MainWindow::populateComponentsMenu()
         icTabLayout->addWidget(item);
     }
     icTabLayout->addItem(ui->icTabVerticalSpacer);
-    /*
-    auto *spaceItem = new QSpacerItem(20, 40);
-    icTabLayout->addItem(spaceItem);
-    */
 }
 
 QGraphicsScene *MainWindow::getSceneWidget()
 {
     return m_scene;
 }
+
+void MainWindow::updateGraphicView(QGraphicsScene *scene)
+{
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->viewport()->update();
+}
+
+void MainWindow::refresh()
+{
+    ui->graphicsView->viewport()->update();
+}
+

@@ -79,6 +79,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
         <property name="tabShape">
          <enum>QTabWidget::Rounded</enum>
         </property>
@@ -92,10 +95,13 @@
          <bool>false</bool>
         </property>
         <widget class="QWidget" name="canvasTab">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <attribute name="title">
           <string>New Project</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QGraphicsView" name="graphicsView">
             <property name="enabled">
@@ -109,8 +115,8 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>861</width>
+              <height>771</height>
              </size>
             </property>
             <property name="cursor" stdset="0">
@@ -118,6 +124,12 @@
             </property>
             <property name="mouseTracking">
              <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::DefaultContextMenu</enum>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -135,7 +147,10 @@
              <enum>QGraphicsView::NoAnchor</enum>
             </property>
             <property name="resizeAnchor">
-             <enum>QGraphicsView::NoAnchor</enum>
+             <enum>QGraphicsView::AnchorViewCenter</enum>
+            </property>
+            <property name="viewportUpdateMode">
+             <enum>QGraphicsView::FullViewportUpdate</enum>
             </property>
            </widget>
           </item>

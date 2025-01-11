@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QObject>
+#include "../UI/Widgets/sceneWidget.h"
 
 namespace UI
 {
@@ -11,12 +12,12 @@ namespace UI
     {
         Q_OBJECT
     public:
-        explicit SceneEditor(QObject *parent = nullptr, QGraphicsScene *scene = nullptr);
+        explicit SceneEditor(QObject *parent = nullptr);
 
         bool eventFilter(QObject *obj, QEvent *evt) override;
 
     private:
-        QGraphicsScene *m_scene;
+        UI::CustomWidgets::sceneWidget *m_scene;
 
         bool handleDropEvent(QGraphicsSceneDragDropEvent *event);
     };
