@@ -23,10 +23,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(LogicSim
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        UI/Widgets/scenewidget.h UI/Widgets/scenewidget.cpp
-        UI/Widgets/listitemwidget.h UI/Widgets/listitemwidget.cpp
+        UI/Widgets/sceneWidget.h UI/Widgets/sceneWidget.cpp
+        UI/Widgets/listItemWidget.h UI/Widgets/listItemWidget.cpp
         Resources/resources.qrc
         Resources/inputs/buttonOn.png
+        Controllers/sceneEditor.h Controllers/sceneEditor.cpp
+        UI/Widgets/draggableLabel.h UI/Widgets/draggableLabel.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

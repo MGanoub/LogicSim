@@ -1,1 +1,6 @@
-<RCC/>
+<RCC>
+    <qresource>
+         <file>inputs/buttonOn.png</file>
+         <file>inputs/VCC.png</file>
+    </qresource>
+</RCC>

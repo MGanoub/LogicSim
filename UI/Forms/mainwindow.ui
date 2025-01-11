@@ -35,40 +35,37 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="icTab">
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
          <attribute name="icon">
           <iconset theme="QIcon::ThemeIcon::DriveOptical"/>
          </attribute>
          <attribute name="title">
           <string>IC</string>
          </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+          <property name="spacing">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
           <item>
-           <widget class="QListWidget" name="icListWidget">
-            <property name="minimumSize">
+           <spacer name="icTabVerticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>201</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(241, 241, 241);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </widget>
