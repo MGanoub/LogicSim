@@ -1,7 +1,8 @@
 #include "sceneEditor.h"
-#include "../UI/Widgets/CircuitElement/elementPort.h"
-#include "../UI/Widgets/CircuitElement/elementView.h"
-#include "../UI/mainwindow.h"
+#include "UI/Widgets/CircuitElement/elementConnection.h"
+#include "UI/Widgets/CircuitElement/elementPort.h"
+#include "UI/Widgets/CircuitElement/elementView.h"
+#include "UI/mainwindow.h"
 #include <QEvent>
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsSceneMouseEvent>
@@ -35,6 +36,16 @@ namespace UI
             return handleMousePressEvent(evt);
             break;
         }
+        case QEvent::GraphicsSceneMouseMove:
+        {
+            return handleMouseMovementEvent(evt);
+            break;
+        }
+        case QEvent::GraphicsSceneMouseRelease:
+        {
+            return handleMouseReleaseEvent(evt);
+            break;
+        }
         case QEvent::GraphicsSceneDrop:
         {
             return handleDropEvent(evt);
@@ -61,14 +72,80 @@ namespace UI
         {
             return true;
         }
-        if (isItemAnElementPort(item))
+        if (isItemAnElementPort(item) && !hasConnectionStarted())
         {
+            auto *connection = new UI::CustomWidgets::ElementConnection();
+            setConnectionInEdit(connection);
+            connection->setStartPos(mousePos);
+            m_scene->addItem(connection);
+
             auto *port = dynamic_cast<UI::CustomWidgets::ElementPort *>(item);
-            port->UpdateBrush();
+            port->updateBrush();
         }
         return true;
     }
 
+    bool SceneEditor::hasConnectionStarted()
+    {
+        return m_isWireConnectionInProgress;
+    }
+    UI::CustomWidgets::ElementConnection *SceneEditor::getConnectionInEdit()
+    {
+        return m_connection;
+    }
+    void SceneEditor::setConnectionInEdit(UI::CustomWidgets::ElementConnection *connection)
+    {
+        m_connection = connection;
+        m_isWireConnectionInProgress = true;
+    }
+
+    bool SceneEditor::handleMouseMovementEvent(QEvent *event)
+    {
+        auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
+        auto mousePos = mouseEvt->scenePos();
+
+        if (hasConnectionStarted())
+        {
+            auto *connection = getConnectionInEdit();
+            connection->setEndPos(mousePos);
+            connection->updatePath();
+            connection->update();
+        }
+        return true;
+    }
+    bool SceneEditor::handleMouseReleaseEvent(QEvent *event)
+    {
+        auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
+        auto mousePos = mouseEvt->scenePos();
+
+        if (hasConnectionStarted())
+        {
+            auto *item = getSceneItemAtPos(mousePos);
+            if (item->type() != UI::CustomWidgets::ElementPort::Type)
+            {
+                removeConnection();
+                return true;
+            }
+            auto *connection = getConnectionInEdit();
+            connection->makeConnection(static_cast<UI::CustomWidgets::ElementPort *>(item));
+            m_connectionsList.append(connection);
+            resetConnectionStatus();
+
+        }
+        return true;
+    }
+    void SceneEditor::resetConnectionStatus()
+    {
+        m_connection = nullptr;
+        m_isWireConnectionInProgress = false;
+    }
+    void SceneEditor::removeConnection()
+    {
+        auto *connection = getConnectionInEdit();
+        m_scene->removeItem(connection);
+        m_isWireConnectionInProgress = false;
+        delete connection;
+    }
     bool SceneEditor::handleDropEvent(QEvent *event)
     {
         auto *dragDropevent = dynamic_cast<QGraphicsSceneDragDropEvent *>(event);

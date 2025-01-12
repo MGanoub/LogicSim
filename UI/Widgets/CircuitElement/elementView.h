@@ -1,7 +1,7 @@
 #ifndef ELEMENTVIEW_H
 #define ELEMENTVIEW_H
 
-#include "../../../Core/Circuit/elementTypeEnum.h"
+#include"Core/Circuit/elementTypeEnum.h"
 #include <QGraphicsObject>
 
 namespace UI::CustomWidgets

@@ -14,7 +14,7 @@ namespace UI::CustomWidgets
             Type = QGraphicsItem::UserType + 1
         };
         explicit ElementPort(QGraphicsItem *parent = nullptr);
-        void UpdateBrush();
+        void updateBrush();
 
         int type() const override
         {

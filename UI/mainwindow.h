@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../Controllers/sceneEditor.h"
+#include"Controllers/sceneEditor.h"
 #include <QMainWindow>
 #include <qgraphicsscene.h>
 

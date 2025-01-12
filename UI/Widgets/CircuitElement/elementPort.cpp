@@ -16,7 +16,7 @@ namespace UI::CustomWidgets
         setBrush(Qt::red);
     }
 
-    void ElementPort::UpdateBrush()
+    void ElementPort::updateBrush()
     {
         setBrush(Qt::yellow);
         update();

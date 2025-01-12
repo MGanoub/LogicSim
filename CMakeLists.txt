@@ -19,6 +19,9 @@ set(PROJECT_SOURCES
         UI/Forms/mainwindow.ui
 )
 
+
+include_directories(./)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(LogicSim
         MANUAL_FINALIZATION
