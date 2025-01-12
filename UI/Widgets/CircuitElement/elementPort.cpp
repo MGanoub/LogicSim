@@ -1,4 +1,5 @@
 #include "elementPort.h"
+#include <QGraphicsItem>
 #include <QPen>
 
 namespace UI::CustomWidgets
@@ -14,4 +15,11 @@ namespace UI::CustomWidgets
         setPen(QPen(Qt::darkRed));
         setBrush(Qt::red);
     }
+
+    void ElementPort::UpdateBrush()
+    {
+        setBrush(Qt::yellow);
+        update();
+    }
+
 }

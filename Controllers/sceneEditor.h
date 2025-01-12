@@ -1,9 +1,9 @@
 #ifndef SCENEEDITOR_H
 #define SCENEEDITOR_H
 
+#include "../UI/Widgets/sceneWidget.h"
 #include <QGraphicsScene>
 #include <QObject>
-#include "../UI/Widgets/sceneWidget.h"
 
 namespace UI
 {
@@ -19,7 +19,10 @@ namespace UI
     private:
         UI::CustomWidgets::sceneWidget *m_scene;
 
-        bool handleDropEvent(QGraphicsSceneDragDropEvent *event);
+        bool handleDropEvent(QEvent *event);
+        bool handleMousePressEvent(QEvent *event);
+        QGraphicsItem *getSceneItemAtPos(const QPointF PosPoint);
+        bool isItemAnElementPort(QGraphicsItem *item);
     };
 }
 

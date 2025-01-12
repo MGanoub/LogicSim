@@ -9,7 +9,17 @@ namespace UI::CustomWidgets
     class ElementPort : public QGraphicsPathItem
     {
     public:
+        enum
+        {
+            Type = QGraphicsItem::UserType + 1
+        };
         explicit ElementPort(QGraphicsItem *parent = nullptr);
+        void UpdateBrush();
+
+        int type() const override
+        {
+            return Type;
+        }
 
     private:
         int m_radius;

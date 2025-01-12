@@ -1,7 +1,7 @@
 #ifndef ELEMENTVIEW_H
 #define ELEMENTVIEW_H
 
-#include "../../Core/Circuit/elementTypeEnum.h"
+#include "../../../Core/Circuit/elementTypeEnum.h"
 #include <QGraphicsObject>
 
 namespace UI::CustomWidgets
@@ -10,6 +10,11 @@ namespace UI::CustomWidgets
     {
         Q_OBJECT
 
+        enum
+        {
+            Type = QGraphicsItem::UserType + 2
+        };
+
     public:
         explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, QGraphicsItem *parent = nullptr);
 
@@ -17,6 +22,11 @@ namespace UI::CustomWidgets
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
         void setPixmap(const QString &pixmapPath);
+
+        int type() const override
+        {
+            return Type;
+        }
 
     private:
         Core::Circuit::ElementType m_type;

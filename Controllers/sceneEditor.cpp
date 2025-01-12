@@ -1,5 +1,6 @@
 #include "sceneEditor.h"
-#include "../UI/Widgets/elementView.h"
+#include "../UI/Widgets/CircuitElement/elementPort.h"
+#include "../UI/Widgets/CircuitElement/elementView.h"
 #include "../UI/mainwindow.h"
 #include <QEvent>
 #include <QGraphicsSceneDragDropEvent>
@@ -22,42 +23,67 @@ namespace UI
 
     bool SceneEditor::eventFilter(QObject *obj, QEvent *evt)
     {
-        /*
-        if (evt->type() == QEvent::GraphicsSceneMousePress)
+        if (obj != m_scene)
         {
-            const auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(evt);
-            const auto mousePos = mouseEvt->scenePos();
-
-            QPixmap pixmap(":/inputs/buttonOn.png");
-            auto *graphicPixmap = new QGraphicsPixmapItem(pixmap);
-            graphicPixmap->setOffset(mousePos);
-            graphicPixmap->setFlag(QGraphicsItem::ItemIsMovable);
-            graphicPixmap->setVisible(true);
-            m_scene->addItem(graphicPixmap);
-            m_scene->update();
+            return false;
         }
-        */
-        if (evt->type() == QEvent::GraphicsSceneDrop)
+        const auto eventType = evt->type();
+        switch (eventType)
         {
-            auto *dragDropevent = dynamic_cast<QGraphicsSceneDragDropEvent *>(evt);
-            return handleDropEvent(dragDropevent);
+        case QEvent::GraphicsSceneMousePress:
+        {
+            return handleMousePressEvent(evt);
+            break;
+        }
+        case QEvent::GraphicsSceneDrop:
+        {
+            return handleDropEvent(evt);
+            break;
+        }
+
+        case QEvent::GraphicsSceneDragMove:
+        case QEvent::GraphicsSceneDragEnter:
+        {
+            return true;
+        }
+        default:
+            break;
+        }
+        return QObject::eventFilter(obj, evt);
+    }
+
+    bool SceneEditor::handleMousePressEvent(QEvent *event)
+    {
+        auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
+        auto mousePos = mouseEvt->scenePos();
+        QGraphicsItem *item = getSceneItemAtPos(mousePos);
+        if (item == nullptr)
+        {
+            return true;
+        }
+        if (isItemAnElementPort(item))
+        {
+            auto *port = dynamic_cast<UI::CustomWidgets::ElementPort *>(item);
+            port->UpdateBrush();
         }
         return true;
     }
-    bool SceneEditor::handleDropEvent(QGraphicsSceneDragDropEvent *event)
+
+    bool SceneEditor::handleDropEvent(QEvent *event)
     {
+        auto *dragDropevent = dynamic_cast<QGraphicsSceneDragDropEvent *>(event);
         /* Verify if mimetype is compatible. */
-        if (!event->mimeData()->hasFormat("application/x-dnditemdata"))
+        if (!dragDropevent->mimeData()->hasFormat("application/x-dnditemdata"))
         {
             return false;
         }
         /* Extracting mimedata from drop event. */
-        QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
+        QByteArray itemData = dragDropevent->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
         QPointF offset;
         qint32 type;
         dataStream >> offset >> type;
-        QPointF pos = event->scenePos() - offset;
+        QPointF pos = dragDropevent->scenePos() - offset;
         event->accept();
 
         QPixmap pixmap(":/inputs/VCC.png");
@@ -65,8 +91,25 @@ namespace UI
         elementView->setPixmap(":/inputs/VCC.png");
         elementView->setPos(pos);
         m_scene->addItem(elementView);
-        auto *window = qobject_cast<MainWindow *>(this->parent());
-        window->refresh();
         return true;
+    }
+
+    QGraphicsItem *SceneEditor::getSceneItemAtPos(const QPointF PosPoint)
+    {
+        QRectF areaOfInterestRect(PosPoint - QPointF(4, 4), QSize(9, 9));
+        QList<QGraphicsItem *> sceneItems = m_scene->items(areaOfInterestRect.normalized());
+        for (QGraphicsItem *item : qAsConst(sceneItems))
+        {
+            if (item->type() > QGraphicsItem::UserType)
+            {
+                return item;
+            }
+        }
+        return nullptr;
+    }
+
+    bool SceneEditor::isItemAnElementPort(QGraphicsItem *item)
+    {
+        return item->type() == UI::CustomWidgets::ElementPort::Type;
     }
 }

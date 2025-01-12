@@ -29,9 +29,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Resources/inputs/buttonOn.png
         Controllers/sceneEditor.h Controllers/sceneEditor.cpp
         UI/Widgets/draggableLabel.h UI/Widgets/draggableLabel.cpp
-        UI/Widgets/elementView.h UI/Widgets/elementView.cpp
+        UI/Widgets/CircuitElement/elementView.h UI/Widgets/CircuitElement/elementView.cpp
         Core/Circuit/elementTypeEnum.h
-        UI/Widgets/elementPort.h UI/Widgets/elementPort.cpp
+        UI/Widgets/CircuitElement/elementPort.h UI/Widgets/CircuitElement/elementPort.cpp
+        UI/Widgets/CircuitElement/elementConnection.h UI/Widgets/CircuitElement/elementConnection.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
