@@ -1,26 +1,62 @@
-/*
+
 #include "Core/Circuit/Managers/circuitManager.h"
+#include "Core/Circuit/Components/Input/VCCInput.h"
+#include "Core/Circuit/Components/Output/led.h"
 namespace Core::Circuit
 {
+    CircuitManager::CircuitManager()
+    {
+    }
+
+    CircuitManager::~CircuitManager()
+    {
+        for (auto *comp : m_components)
+        {
+            delete comp;
+        }
+    }
+
+    int CircuitManager::addComponent(ElementType type)
+    {
+        int identifier = -1;
+        switch (type)
+        {
+        case ElementType::VCC:
+        {
+            const auto comp = new VCCInput();
+            identifier = comp->getIndentifier();
+            m_components.push_back(comp);
+            break;
+        }
+        case ElementType::LED:
+        {
+            const auto comp = new LED();
+            identifier = comp->getIndentifier();
+            m_components.push_back(comp);
+            break;
+        }
+        default:
+            break;
+        }
+        return identifier;
+    }
+
+    void CircuitManager::addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
+    {
+    }
+    void CircuitManager::update()
+    {
+    }
+
+    std::vector<Component *> CircuitManager::getComponentsList()
+    {
+        return m_components;
+    }
 
 }
+
 /*
-CircuitManager::CircuitManager()
-{
-    m_simulator
 
-        auto vcc = new Core::Circuit::VCCInput();
-
-    auto vcc1 = new Core::Circuit::VCCInput();
-
-    auto vcc2 = new Core::Circuit::VCCInput();
-}
-
-int CircuitManager::addComponent(int identifier)
-{
-    std::unique_ptr<IComponent *> component = componentFactory.createComponent(identifier);
-    m_components.push_back(component);
-}
 
 void CircuitManager::addConnection(int firstComponentIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
 {

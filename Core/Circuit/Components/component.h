@@ -10,18 +10,22 @@ namespace Core::Circuit
     public:
         enum class Type
         {
+            UNDEFINED,
             INPUT,
             LOGIC_GATE,
             OUTPUT
         };
-        Component();
+        Component() = default;
+        Component(Type type);
+        Component(Component&& other);
 
         int getIndentifier() override;
-        virtual void setType(Component::Type type) = 0;
-        virtual Component::Type getType() = 0;
+        virtual void setType(Component::Type type);
+        virtual Component::Type getType();
 
     private:
         int m_identifier;
+        Type m_type;
     };
 }
 #endif // COMPONENT_H

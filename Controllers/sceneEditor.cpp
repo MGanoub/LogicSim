@@ -1,4 +1,5 @@
 #include "sceneEditor.h"
+#include "Core/Circuit/Managers/circuitManager.h"
 #include "UI/Widgets/CircuitElement/elementConnection.h"
 #include "UI/Widgets/CircuitElement/elementPort.h"
 #include "UI/Widgets/CircuitElement/elementView.h"
@@ -20,6 +21,8 @@ namespace UI
         m_scene->installEventFilter(this);
         auto *window = qobject_cast<MainWindow *>(this->parent());
         window->updateGraphicView(m_scene);
+
+        m_circuitManager = new Core::Circuit::CircuitManager();
     }
 
     bool SceneEditor::eventFilter(QObject *obj, QEvent *evt)
@@ -76,11 +79,11 @@ namespace UI
         {
             auto *connection = new UI::CustomWidgets::ElementConnection();
             setConnectionInEdit(connection);
-            connection->setStartPos(mousePos);
-            m_scene->addItem(connection);
 
-            auto *port = dynamic_cast<UI::CustomWidgets::ElementPort *>(item);
+            auto *port = static_cast<UI::CustomWidgets::ElementPort *>(item);
             port->updateBrush();
+            connection->setStartPort(port);
+            m_scene->addItem(connection);
         }
         return true;
     }
@@ -121,13 +124,21 @@ namespace UI
         if (hasConnectionStarted())
         {
             auto *item = getSceneItemAtPos(mousePos);
-            if (item->type() != UI::CustomWidgets::ElementPort::Type)
+            if (item->type() != UI::CustomWidgets::ElementPort::GraphicalType)
             {
                 removeConnection();
                 return true;
             }
             auto *connection = getConnectionInEdit();
             connection->makeConnection(static_cast<UI::CustomWidgets::ElementPort *>(item));
+
+            auto *outputPort = connection->getStartPort();
+            auto *inputPort = connection->getEndPort();
+
+            auto *outputComp = outputPort->getParent();
+            auto *inputComp = outputPort->getParent();
+
+            m_circuitManager->addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
             m_connectionsList.append(connection);
             resetConnectionStatus();
         }
@@ -163,7 +174,9 @@ namespace UI
         event->accept();
 
         auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
-        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 2);
+        auto elementId = m_circuitManager->addComponent(elementType);
+
+        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 2, elementId);
         QString imageName = (type == 11) ? ":/outputs/WhiteLedOff.png" : ":/inputs/VCC.png";
         elementView->setPixmap(imageName);
         elementView->setPos(pos);
@@ -187,6 +200,6 @@ namespace UI
 
     bool SceneEditor::isItemAnElementPort(QGraphicsItem *item)
     {
-        return item->type() == UI::CustomWidgets::ElementPort::Type;
+        return item->type() == UI::CustomWidgets::ElementPort::GraphicalType;
     }
 }

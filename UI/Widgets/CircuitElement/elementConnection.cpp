@@ -7,19 +7,35 @@
 namespace UI::CustomWidgets
 {
     ElementConnection::ElementConnection(QGraphicsItem *parent)
-        : QGraphicsPathItem(parent)
+        : QGraphicsPathItem(parent), m_startPort(nullptr), m_endPort(nullptr)
     {
         setPen(QPen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         setZValue(-1);
     }
 
-    void ElementConnection::setStartPos(const QPointF &pos)
+    void ElementConnection::setStartPort(ElementPort *port)
     {
-        m_startPos = pos;
+        m_startPort = port;
+        m_startPos = port->scenePos();
     }
+    void ElementConnection::setEndPort(ElementPort *port)
+    {
+        m_endPort = port;
+        m_endPos = port->scenePos();
+    }
+
     void ElementConnection::setEndPos(const QPointF &pos)
     {
         m_endPos = pos;
+    }
+
+    ElementPort *ElementConnection::getStartPort()
+    {
+        return m_startPort;
+    }
+    ElementPort *ElementConnection::getEndPort()
+    {
+        return m_endPort;
     }
 
     void ElementConnection::updatePath()
@@ -61,6 +77,7 @@ namespace UI::CustomWidgets
         {
             return;
         }
+        setEndPort(connectionItem);
         connectionItem->setBrush(Qt::green);
         connectionItem->update();
         auto *elementView = static_cast<UI::CustomWidgets::ElementView *>(connectionItem->parentObject());

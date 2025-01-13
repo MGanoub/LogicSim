@@ -42,6 +42,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/Managers/circuitManager.h Core/Circuit/Managers/circuitManager.cpp
         Core/Circuit/Components/Input/inputComponent.h Core/Circuit/Components/Input/inputComponent.cpp
         Core/Circuit/Components/component.h Core/Circuit/Components/component.cpp
+        Core/Circuit/Components/Output/outputComponent.h Core/Circuit/Components/Output/outputComponent.cpp
+        Core/Circuit/Components/Output/led.h Core/Circuit/Components/Output/led.cpp
 
 
     )

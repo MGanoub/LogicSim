@@ -1,7 +1,7 @@
 #ifndef ELEMENTVIEW_H
 #define ELEMENTVIEW_H
 
-#include"Core/Circuit/elementTypeEnum.h"
+#include "Core/Circuit/elementTypeEnum.h"
 #include <QGraphicsObject>
 
 namespace UI::CustomWidgets
@@ -16,12 +16,13 @@ namespace UI::CustomWidgets
         };
 
     public:
-        explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, QGraphicsItem *parent = nullptr);
+        explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, int identifier, QGraphicsItem *parent = nullptr);
 
         QRectF boundingRect() const override;
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
         void setPixmap(const QString &pixmapPath);
+        int getId();
 
         int type() const override
         {
@@ -32,6 +33,7 @@ namespace UI::CustomWidgets
         Core::Circuit::ElementType m_type;
         QPixmap *m_pixmap;
         int m_inputPortsCount;
+        int m_identifier;
 
         void addPorts();
         void updatePortsPosition();

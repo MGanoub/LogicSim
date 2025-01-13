@@ -11,19 +11,29 @@ namespace UI::CustomWidgets
     public:
         enum
         {
-            Type = QGraphicsItem::UserType + 1
+            GraphicalType = QGraphicsItem::UserType + 1
         };
-        explicit ElementPort(QGraphicsItem *parent = nullptr);
+
+        enum class PortType
+        {
+            INPUTPORT,
+            OUTPUTPORT
+        };
+
+        explicit ElementPort(PortType type, ElementView *parent = nullptr);
         void updateBrush();
 
-        int type() const override
-        {
-            return Type;
-        }
+        int type() const override;
+        PortType getPortType();
+        ElementView *getParent();
+        void setIndex(int portNumber);
+        int getIndex();
 
     private:
         int m_radius;
         int m_margin;
+        int m_index;
+        PortType m_portType;
 
         ElementView *m_parent;
     };

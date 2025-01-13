@@ -16,8 +16,14 @@ namespace UI::CustomWidgets
 
         explicit ElementConnection(QGraphicsItem *parent = nullptr);
 
-        void setStartPos(const QPointF &pos);
+        void setStartPort(ElementPort *port);
+        void setEndPort(ElementPort *port);
+
         void setEndPos(const QPointF &pos);
+
+        ElementPort *getStartPort();
+        ElementPort *getEndPort();
+
         void updatePath();
         void makeConnection(UI::CustomWidgets::ElementPort *ConnectionItem);
 
@@ -28,6 +34,9 @@ namespace UI::CustomWidgets
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     private:
+        ElementPort *m_startPort;
+        ElementPort *m_endPort;
+
         QPointF m_startPos;
         QPointF m_endPos;
     };

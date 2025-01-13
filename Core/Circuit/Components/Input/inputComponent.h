@@ -9,18 +9,13 @@ namespace Core::Circuit
     class InputComponent : public Component
     {
     public:
-        InputComponent() = default;
-        InputComponent(Port outputPort);
-
-        void setType(Component::Type type) override;
-        Component::Type getType() override;
+        explicit InputComponent(Port outputPort);
 
         State getOutputState();
         void setOutputState(State state);
 
-    private:
+    protected:
         Port m_outputPort;
-        Component::Type m_type;
     };
 }
 #endif // INPUTCOMPONENT_H

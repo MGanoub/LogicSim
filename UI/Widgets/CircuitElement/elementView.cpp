@@ -5,10 +5,15 @@
 
 namespace UI::CustomWidgets
 {
-    ElementView::ElementView(Core::Circuit::ElementType type, int inputPortCount, QGraphicsItem *parent)
-        : QGraphicsObject(parent), m_type(type), m_inputPortsCount(inputPortCount)
+    ElementView::ElementView(Core::Circuit::ElementType type, int inputPortCount, int identifier, QGraphicsItem *parent)
+        : QGraphicsObject(parent), m_type(type), m_inputPortsCount(inputPortCount), m_identifier(identifier)
     {
         addPorts();
+    }
+
+    int ElementView::getId()
+    {
+        return m_identifier;
     }
 
     QRectF ElementView::boundingRect() const
@@ -45,8 +50,8 @@ namespace UI::CustomWidgets
         for (int i = 0; i < m_inputPortsCount; i++)
         {
             {
-                auto *port = new ElementPort(this);
-                // port->setGraphicElement(this);
+                auto *port = new ElementPort(ElementPort::PortType::INPUTPORT, this);
+                port->setIndex(i);
                 port->setPos(32, 0);
                 port->update();
                 // updatePorts();

@@ -5,6 +5,10 @@
 #include <QGraphicsScene>
 #include <QObject>
 
+namespace Core::Circuit
+{
+    class CircuitManager;
+}
 namespace UI
 {
     namespace CustomWidgets
@@ -23,7 +27,8 @@ namespace UI
         UI::CustomWidgets::sceneWidget *m_scene;
         UI::CustomWidgets::ElementConnection *m_connection;
         bool m_isWireConnectionInProgress = false;
-        QList< UI::CustomWidgets::ElementConnection *> m_connectionsList;
+        QList<UI::CustomWidgets::ElementConnection *> m_connectionsList;
+        Core::Circuit::CircuitManager *m_circuitManager;
 
         bool handleDropEvent(QEvent *event);
         bool handleMousePressEvent(QEvent *event);
@@ -32,7 +37,6 @@ namespace UI
 
         QGraphicsItem *getSceneItemAtPos(const QPointF PosPoint);
         bool isItemAnElementPort(QGraphicsItem *item);
-
 
         void setConnectionInEdit(UI::CustomWidgets::ElementConnection *connection);
         void removeConnection();

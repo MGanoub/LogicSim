@@ -4,8 +4,8 @@
 
 namespace UI::CustomWidgets
 {
-    ElementPort::ElementPort(QGraphicsItem *parent)
-        : QGraphicsPathItem(parent), m_radius(5), m_margin(2)
+    ElementPort::ElementPort(ElementPort::PortType type, ElementView *parent)
+        : QGraphicsPathItem(parent), m_parent(parent), m_radius(5), m_margin(2), m_portType(type)
     {
 
         QPainterPath p;
@@ -20,6 +20,30 @@ namespace UI::CustomWidgets
     {
         setBrush(Qt::yellow);
         update();
+    }
+
+    int ElementPort::type() const
+    {
+        return GraphicalType;
+    }
+
+    ElementPort::PortType ElementPort::getPortType()
+    {
+        return m_portType;
+    }
+
+    ElementView *ElementPort::getParent()
+    {
+        return m_parent;
+    }
+
+    void ElementPort::setIndex(int portNumber)
+    {
+        m_index = portNumber;
+    }
+    int ElementPort::getIndex()
+    {
+        return m_index;
     }
 
 }
