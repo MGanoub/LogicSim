@@ -43,4 +43,14 @@ namespace Core::Circuit
     {
         return m_inputPortsCount;
     }
+
+    void OutputComponent::computeOutputState()
+    {
+        m_outState = State::OFF;
+    }
+
+    State OutputComponent::getOutState()
+    {
+        return m_outState;
+    }
 }

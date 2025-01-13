@@ -16,4 +16,9 @@ namespace Core::Circuit
     {
         m_outputPort.setState(state);
     }
+
+    Port *InputComponent::getOutputPort()
+    {
+        return &m_outputPort;
+    }
 }

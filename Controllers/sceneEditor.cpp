@@ -130,15 +130,19 @@ namespace UI
                 return true;
             }
             auto *connection = getConnectionInEdit();
-            connection->makeConnection(static_cast<UI::CustomWidgets::ElementPort *>(item));
-
             auto *outputPort = connection->getStartPort();
-            auto *inputPort = connection->getEndPort();
-
+            auto *inputPort = static_cast<UI::CustomWidgets::ElementPort *>(item);
             auto *outputComp = outputPort->getParent();
-            auto *inputComp = outputPort->getParent();
+            auto *inputComp = inputPort->getParent();
+            const auto isConnectionMade = m_circuitManager->addConnection(outputComp->getId(), inputComp->getId(), inputPort->getIndex());
 
-            m_circuitManager->addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
+            if (!isConnectionMade)
+            {
+                removeConnection();
+                return true;
+            }
+
+            connection->makeConnection(inputPort);
             m_connectionsList.append(connection);
             resetConnectionStatus();
         }
@@ -176,7 +180,7 @@ namespace UI
         auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
         auto elementId = m_circuitManager->addComponent(elementType);
 
-        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 2, elementId);
+        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 1, elementId);
         QString imageName = (type == 11) ? ":/outputs/WhiteLedOff.png" : ":/inputs/VCC.png";
         elementView->setPixmap(imageName);
         elementView->setPos(pos);

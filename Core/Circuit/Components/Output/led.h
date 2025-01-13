@@ -9,6 +9,7 @@ namespace Core::Circuit
     {
     public:
         LED();
+        void computeOutputState() override;
     };
 }
 #endif // LED_H

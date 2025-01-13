@@ -2,6 +2,7 @@
 #include "Core/Circuit/Managers/circuitManager.h"
 #include "Core/Circuit/Components/Input/VCCInput.h"
 #include "Core/Circuit/Components/Output/led.h"
+#include <algorithm>
 namespace Core::Circuit
 {
     CircuitManager::CircuitManager()
@@ -41,11 +42,39 @@ namespace Core::Circuit
         return identifier;
     }
 
-    void CircuitManager::addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
+    bool CircuitManager::addConnection(int firstCompIdent, int secondCompIdent, int secondCompPortNumber)
     {
+        auto firstComp = std::find_if(m_components.begin(), m_components.end(), [&](Component *comp)
+                                      { return (comp->getIndentifier() == firstCompIdent); });
+        auto secondComp = std::find_if(m_components.begin(), m_components.end(), [&](Component *comp)
+                                       { return comp->getIndentifier() == secondCompIdent; });
+        if ((firstComp == m_components.end()) || (secondComp == m_components.end()))
+        {
+            return false;
+        }
+        auto *inputComp = static_cast<InputComponent *>(*firstComp);
+        auto *outputComp = static_cast<OutputComponent *>(*secondComp);
+        Port *outputPort = inputComp->getOutputPort();
+        Port *inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
+
+        if (outputPort->isConnected() || inputPort->isConnected())
+        {
+            return false;
+        }
+        outputPort->connectTo(inputPort);
+        inputPort->connectTo(outputPort);
+        return true;
     }
     void CircuitManager::update()
     {
+        for (auto *comp : m_components)
+        {
+            if (comp->getType() == Component::Type::OUTPUT)
+            {
+                auto *outputComp = static_cast<OutputComponent *>(comp);
+                outputComp->computeOutputState();
+            }
+        }
     }
 
     std::vector<Component *> CircuitManager::getComponentsList()

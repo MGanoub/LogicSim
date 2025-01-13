@@ -13,6 +13,7 @@ namespace Core::Circuit
 
         State getOutputState();
         void setOutputState(State state);
+        Port *getOutputPort();
 
     protected:
         Port m_outputPort;

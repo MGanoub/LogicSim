@@ -29,6 +29,9 @@ namespace Core::Circuit
         int getPortNumber();
         void setPortNumber(int num);
         void setParentComp(IComponent *component);
+        void connectTo(Port *otherPort);
+        void updateState();
+        bool isConnected();
         IComponent *getParentComp();
 
     private:
@@ -36,6 +39,8 @@ namespace Core::Circuit
         Type m_portType;
         int m_portNumber;
         IComponent *m_parentComp;
+        Port *m_otherConnectedPort;
+        bool m_isConnected;
     };
 
 }

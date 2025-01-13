@@ -16,10 +16,13 @@ namespace Core::Circuit
         Port *getInputPortAtIndex(int portNumber);
         void setInputOnPortIndex(int portNumber, State state);
         int getPortsCount();
+        State getOutState();
+        virtual void computeOutputState();
 
     protected:
         int m_inputPortsCount;
         std::vector<Port> m_ports;
+        State m_outState;
 
         void createInputPorts();
     };

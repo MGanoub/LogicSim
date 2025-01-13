@@ -14,7 +14,7 @@ namespace Core::Circuit
         ~CircuitManager();
 
         int addComponent(ElementType type);
-        void addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
+        bool addConnection(int firstCompIdent, int secondCompIdent, int secondCompPortNumber);
         void update();
         std::vector<Component *> getComponentsList();
 
