@@ -130,7 +130,6 @@ namespace UI
             connection->makeConnection(static_cast<UI::CustomWidgets::ElementPort *>(item));
             m_connectionsList.append(connection);
             resetConnectionStatus();
-
         }
         return true;
     }
@@ -163,9 +162,10 @@ namespace UI
         QPointF pos = dragDropevent->scenePos() - offset;
         event->accept();
 
-        QPixmap pixmap(":/inputs/VCC.png");
-        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 2);
-        elementView->setPixmap(":/inputs/VCC.png");
+        auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
+        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 2);
+        QString imageName = (type == 11) ? ":/outputs/WhiteLedOff.png" : ":/inputs/VCC.png";
+        elementView->setPixmap(imageName);
         elementView->setPos(pos);
         m_scene->addItem(elementView);
         return true;

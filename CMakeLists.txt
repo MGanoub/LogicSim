@@ -36,6 +36,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/elementTypeEnum.h
         UI/Widgets/CircuitElement/elementPort.h UI/Widgets/CircuitElement/elementPort.cpp
         UI/Widgets/CircuitElement/elementConnection.h UI/Widgets/CircuitElement/elementConnection.cpp
+        Core/Circuit/Components/IComponent.h
+        Core/Circuit/Components/Input/VCCInput.h Core/Circuit/Components/Input/VCCInput.cpp
+        Core/Circuit/Components/port.h Core/Circuit/Components/port.cpp
+        Core/Circuit/Managers/circuitManager.h Core/Circuit/Managers/circuitManager.cpp
+        Core/Circuit/Components/Input/inputComponent.h Core/Circuit/Components/Input/inputComponent.cpp
+        Core/Circuit/Components/component.h Core/Circuit/Components/component.cpp
+
 
     )
 # Define target properties for Android with Qt 6 as:

@@ -1,7 +1,6 @@
 #ifndef ELEMENTTYPEENUM_H
 #define ELEMENTTYPEENUM_H
 
-#endif // ELEMENTTYPEENUM_H
 
 namespace Core::Circuit
 {
@@ -12,4 +11,13 @@ enum class ElementType {
     LED,
     MAXITEM
 };
+
+enum class State
+{
+    OFF = 0,
+    ON = 1
+};
 }
+
+
+#endif // ELEMENTTYPEENUM_H

@@ -48,15 +48,8 @@ namespace UI::CustomWidgets
         }
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-        /*
-        QString text = ElementFactory::typeToText(m_elementType);
-        if (text.contains("_")) {
-            text = text.split("_").last();
-        }
-        ElementType type = ElementFactory::textToType(text);
-        /*  qDebug() << objectName(); */
 
-        dataStream << QPointF(pos) << static_cast<qint32>(10);
+        dataStream << QPointF(pos) << static_cast<qint32>(m_type);
 
         auto *mimeData = new QMimeData;
         mimeData->setData("application/x-dnditemdata", itemData);

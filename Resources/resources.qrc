@@ -2,5 +2,7 @@
     <qresource>
          <file>inputs/buttonOn.png</file>
          <file>inputs/VCC.png</file>
+         <file>outputs/WhiteLedOff.png</file>
+         <file>outputs/WhiteLedOn.png</file>
     </qresource>
 </RCC>

@@ -36,11 +36,11 @@ void MainWindow::populateComponentsMenu()
     {
         return;
     }
-    for (int i = 0; i < 4; i++)
-    {
-        auto *item = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/VCC.png"), 10, QString("VCC"), this);
-        icTabLayout->addWidget(item);
-    }
+
+    auto *vccItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/VCC.png"), 10, QString("VCC"), this);
+    auto *ledItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/outputs/WhiteLedOff.png"), 11, QString("LED"), this);
+    icTabLayout->addWidget(vccItem);
+    icTabLayout->addWidget(ledItem);
     icTabLayout->addItem(ui->icTabVerticalSpacer);
 }
 
@@ -52,11 +52,4 @@ QGraphicsScene *MainWindow::getSceneWidget()
 void MainWindow::updateGraphicView(QGraphicsScene *scene)
 {
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->viewport()->update();
 }
-
-void MainWindow::refresh()
-{
-    ui->graphicsView->viewport()->update();
-}
-

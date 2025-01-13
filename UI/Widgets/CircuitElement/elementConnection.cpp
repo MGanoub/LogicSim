@@ -63,6 +63,8 @@ namespace UI::CustomWidgets
         }
         connectionItem->setBrush(Qt::green);
         connectionItem->update();
+        auto *elementView = static_cast<UI::CustomWidgets::ElementView *>(connectionItem->parentObject());
+        elementView->setPixmap(":/outputs/WhiteLedOn.png");
     }
 
 }
