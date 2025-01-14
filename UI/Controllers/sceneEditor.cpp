@@ -1,10 +1,9 @@
 #include "sceneEditor.h"
 #include "Core/Circuit/Managers/circuitManager.h"
-#include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 #include "UI/disp/Widgets/CircuitElement/elementConnection.h"
+#include "UI/disp/Widgets/CircuitElement/elementFactory.h"
 #include "UI/disp/Widgets/CircuitElement/elementPort.h"
 #include "UI/disp/Widgets/CircuitElement/elementView.h"
-#include "UI/disp/mainwindow.h"
 #include <QEvent>
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsSceneMouseEvent>
@@ -200,9 +199,9 @@ namespace UI
 
         auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
         auto elementId = m_circuitManager->addComponent(elementType);
-        if (type == 11)
+        if (type == 11 && elementId)
         {
-            auto *elementView = new UI::CircuitElements::LEDView(elementId);
+            auto *elementView = UI::ElementFactory::getInstance().createElement(elementType, elementId);
             elementView->setPos(pos);
             m_scene->addItem(elementView);
             m_circuitElements.push_back(elementView);

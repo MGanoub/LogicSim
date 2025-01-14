@@ -50,6 +50,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/Controllers/mainGuiContainer.h UI/Controllers/mainGuiContainer.cpp
         UI/Controllers/componentsMenuContainer.h UI/Controllers/componentsMenuContainer.cpp
         UI/disp/Widgets/componentsMenuWidget.h UI/disp/Widgets/componentsMenuWidget.cpp
+        Core/Circuit/Components/componentsFactory.h Core/Circuit/Components/componentsFactory.cpp
+        UI/disp/Widgets/CircuitElement/elementFactory.h UI/disp/Widgets/CircuitElement/elementFactory.cpp
 
 
     )

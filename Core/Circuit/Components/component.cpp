@@ -5,7 +5,7 @@ namespace Core::Circuit
     Component::Component(Type type)
         : m_type(type)
     {
-        static int s_uniqueIdentifier = 0;
+        static int s_uniqueIdentifier = 1;
         m_identifier = s_uniqueIdentifier++;
     }
 

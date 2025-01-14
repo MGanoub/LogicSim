@@ -1,5 +1,7 @@
 
 #include "Core/Circuit/Managers/circuitManager.h"
+#include "Core/Circuit/Components/componentsFactory.h"
+
 #include "Core/Circuit/Components/Input/VCCInput.h"
 #include "Core/Circuit/Components/Output/led.h"
 #include <algorithm>
@@ -19,26 +21,15 @@ namespace Core::Circuit
 
     int CircuitManager::addComponent(ElementType type)
     {
-        int identifier = -1;
-        switch (type)
+        int identifier = 0;
+        auto *comp = ComponentsFactory::getInstance().createComponent(type);
+        if (comp->getType() == Component::Type::UNDEFINED)
         {
-        case ElementType::VCC:
-        {
-            const auto comp = new VCCInput();
-            identifier = comp->getIndentifier();
-            m_components.push_back(comp);
-            break;
+            delete comp;
+            return identifier;
         }
-        case ElementType::LED:
-        {
-            const auto comp = new LED();
-            identifier = comp->getIndentifier();
-            m_components.push_back(comp);
-            break;
-        }
-        default:
-            break;
-        }
+        identifier = comp->getIndentifier();
+        m_components.push_back(comp);
         return identifier;
     }
 
@@ -95,24 +86,24 @@ namespace Core::Circuit
         }
         return m_outputComponents;
     }
-    }
+}
 
-    /*
+/*
 
-    ::startSimluation()
-    {
-        m_simulator.start();
-    }
-    ::pauseSimulation()
-    {
-        m_simulator.pause();
-    }
+::startSimluation()
+{
+    m_simulator.start();
+}
+::pauseSimulation()
+{
+    m_simulator.pause();
+}
 
-    notifyListeners()
+notifyListeners()
+{
+    for (listeners : listeners)
     {
-        for (listeners : listeners)
-        {
-            listener.update();
-        }
+        listener.update();
     }
-    */
+}
+*/
