@@ -14,9 +14,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        UI/mainwindow.cpp
-        UI/mainwindow.h
-        UI/Forms/mainwindow.ui
+        UI/disp/mainwindow.cpp
+        UI/disp/mainwindow.h
+        UI/disp/Forms/mainwindow.ui
 )
 
 
@@ -26,16 +26,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(LogicSim
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        UI/Widgets/sceneWidget.h UI/Widgets/sceneWidget.cpp
-        UI/Widgets/listItemWidget.h UI/Widgets/listItemWidget.cpp
+        UI/disp/Widgets/sceneWidget.h UI/disp/Widgets/sceneWidget.cpp
+        UI/disp/Widgets/listItemWidget.h UI/disp/Widgets/listItemWidget.cpp
         Resources/resources.qrc
         Resources/inputs/buttonOn.png
-        Controllers/sceneEditor.h Controllers/sceneEditor.cpp
-        UI/Widgets/draggableLabel.h UI/Widgets/draggableLabel.cpp
-        UI/Widgets/CircuitElement/elementView.h UI/Widgets/CircuitElement/elementView.cpp
+        UI/Controllers/sceneEditor.h  UI/Controllers/sceneEditor.cpp
+        UI/disp/Widgets/draggableLabel.h UI/disp/Widgets/draggableLabel.cpp
+        UI/disp/Widgets/CircuitElement/elementView.h UI/disp/Widgets/CircuitElement/elementView.cpp
         Core/Circuit/elementTypeEnum.h
-        UI/Widgets/CircuitElement/elementPort.h UI/Widgets/CircuitElement/elementPort.cpp
-        UI/Widgets/CircuitElement/elementConnection.h UI/Widgets/CircuitElement/elementConnection.cpp
+        UI/disp/Widgets/CircuitElement/elementPort.h UI/disp/Widgets/CircuitElement/elementPort.cpp
+        UI/disp/Widgets/CircuitElement/elementConnection.h UI/disp/Widgets/CircuitElement/elementConnection.cpp
         Core/Circuit/Components/IComponent.h
         Core/Circuit/Components/Input/VCCInput.h Core/Circuit/Components/Input/VCCInput.cpp
         Core/Circuit/Components/port.h Core/Circuit/Components/port.cpp
@@ -44,7 +44,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/Components/component.h Core/Circuit/Components/component.cpp
         Core/Circuit/Components/Output/outputComponent.h Core/Circuit/Components/Output/outputComponent.cpp
         Core/Circuit/Components/Output/led.h Core/Circuit/Components/Output/led.cpp
-        UI/Widgets/CircuitElement/OutputElements/ledView.h UI/Widgets/CircuitElement/OutputElements/ledView.cpp
+        UI/disp/Widgets/CircuitElement/OutputElements/ledView.h UI/disp/Widgets/CircuitElement/OutputElements/ledView.cpp
+        logicSimApp.h logicSimApp.cpp
+        UI/qtApp.h UI/qtApp.cpp
+        UI/Controllers/mainGuiContainer.h UI/Controllers/mainGuiContainer.cpp
 
 
     )
