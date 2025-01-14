@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1147</width>
-    <height>876</height>
+    <height>877</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,43 +32,8 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>-1</number>
         </property>
-        <widget class="QWidget" name="icTab">
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <attribute name="icon">
-          <iconset theme="QIcon::ThemeIcon::DriveOptical"/>
-         </attribute>
-         <attribute name="title">
-          <string>IC</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
-          <property name="spacing">
-           <number>1</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <item>
-           <spacer name="icTabVerticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
        </widget>
       </item>
       <item row="0" column="1">

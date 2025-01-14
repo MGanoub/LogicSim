@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "UI/Controllers/sceneEditor.h"
 #include <QMainWindow>
 #include <qgraphicsscene.h>
 
@@ -11,11 +10,6 @@ namespace Ui
     class MainWindow;
 }
 QT_END_NAMESPACE
-
-namespace CustomWidgets
-{
-    class sceneWidget;
-}
 namespace UI
 {
 
@@ -28,13 +22,10 @@ namespace UI
         ~MainWindow();
 
         QGraphicsView *getGraphicsViewWidget();
+        QTabWidget *getComponentsTabWidget();
 
     private:
         Ui::MainWindow *ui;
-        QGraphicsScene *m_scene;
-        UI::SceneEditor *m_editor;
-
-        void populateComponentsMenu();
     };
 }
 #endif // MAINWINDOW_H

@@ -48,6 +48,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         logicSimApp.h logicSimApp.cpp
         UI/qtApp.h UI/qtApp.cpp
         UI/Controllers/mainGuiContainer.h UI/Controllers/mainGuiContainer.cpp
+        UI/Controllers/componentsMenuContainer.h UI/Controllers/componentsMenuContainer.cpp
+        UI/disp/Widgets/componentsMenuWidget.h UI/disp/Widgets/componentsMenuWidget.cpp
 
 
     )
