@@ -44,6 +44,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/Components/component.h Core/Circuit/Components/component.cpp
         Core/Circuit/Components/Output/outputComponent.h Core/Circuit/Components/Output/outputComponent.cpp
         Core/Circuit/Components/Output/led.h Core/Circuit/Components/Output/led.cpp
+        UI/Widgets/CircuitElement/OutputElements/ledView.h UI/Widgets/CircuitElement/OutputElements/ledView.cpp
 
 
     )

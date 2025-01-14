@@ -68,4 +68,8 @@ namespace UI::CustomWidgets
         // port->setPos(32, 0);
         // port->update();
     }
+
+    void ElementView::setOutputState(Core::Circuit::State state)
+    {
+    }
 }

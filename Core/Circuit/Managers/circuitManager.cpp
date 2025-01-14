@@ -82,39 +82,37 @@ namespace Core::Circuit
         return m_components;
     }
 
-}
-
-/*
-
-
-void CircuitManager::addConnection(int firstComponentIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
-{
-    auto *firstComp = std::find(== ident) auto *secondComp = std::find(second);
-    if (firstCmp != &&second)
+    std::vector<OutputComponent *> CircuitManager::getOutputComponentsList()
     {
-        return false;
+        std::vector<OutputComponent *> m_outputComponents;
+        for (auto *comp : m_components)
+        {
+            if (comp->getType() == Component::Type::OUTPUT)
+            {
+                auto *outputComp = static_cast<OutputComponent *>(comp);
+                m_outputComponents.push_back(outputComp);
+            }
+        }
+        return m_outputComponents;
     }
-    Port p1 = firstComp.getPort();
-    Port p2 = secondComp.getPort();
-    p1->connectTo(p2);
-    p2->connectTo(p1);
-    return true;
-}
+    }
 
-::startSimluation()
-{
-    m_simulator.start();
-}
-::pauseSimulation()
-{
-    m_simulator.pause();
-}
+    /*
 
-notifyListeners()
-{
-    for (listeners : listeners)
+    ::startSimluation()
     {
-        listener.update();
+        m_simulator.start();
     }
-}
-*/
+    ::pauseSimulation()
+    {
+        m_simulator.pause();
+    }
+
+    notifyListeners()
+    {
+        for (listeners : listeners)
+        {
+            listener.update();
+        }
+    }
+    */

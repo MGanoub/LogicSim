@@ -40,7 +40,7 @@ namespace Core::Circuit
             return;
         }
         m_otherConnectedPort = otherPort;
-        m_isConnected = false;
+        m_isConnected = true;
     }
 
     bool Port::isConnected()

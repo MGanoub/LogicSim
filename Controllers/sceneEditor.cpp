@@ -1,5 +1,6 @@
 #include "sceneEditor.h"
 #include "Core/Circuit/Managers/circuitManager.h"
+#include "UI/Widgets/CircuitElement/OutputElements/ledView.h"
 #include "UI/Widgets/CircuitElement/elementConnection.h"
 #include "UI/Widgets/CircuitElement/elementPort.h"
 #include "UI/Widgets/CircuitElement/elementView.h"
@@ -141,13 +142,30 @@ namespace UI
                 removeConnection();
                 return true;
             }
-
             connection->makeConnection(inputPort);
             m_connectionsList.append(connection);
             resetConnectionStatus();
+
+            m_circuitManager->update();
+            updateElementsInScene();
         }
         return true;
     }
+
+    void SceneEditor::updateElementsInScene()
+    {
+        const auto outputList = m_circuitManager->getOutputComponentsList();
+        for (auto outputElement : outputList)
+        {
+            auto elementItr = std::find_if(m_circuitElements.begin(), m_circuitElements.end(), [&](UI::CustomWidgets::ElementView *element)
+                                           { return (element->getId() == outputElement->getIndentifier()); });
+            if (elementItr != m_circuitElements.end())
+            {
+                (*elementItr)->setOutputState(outputElement->getOutState());
+            }
+        }
+    }
+
     void SceneEditor::resetConnectionStatus()
     {
         m_connection = nullptr;
@@ -179,12 +197,21 @@ namespace UI
 
         auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
         auto elementId = m_circuitManager->addComponent(elementType);
+        if (type == 11)
+        {
+            auto *elementView = new UI::CircuitElements::LEDView(elementId);
+            elementView->setPos(pos);
+            m_scene->addItem(elementView);
+            m_circuitElements.push_back(elementView);
+            return true;
+        }
 
-        auto *elementView = new UI::CustomWidgets::ElementView(elementType, 1, elementId);
-        QString imageName = (type == 11) ? ":/outputs/WhiteLedOff.png" : ":/inputs/VCC.png";
+        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 1, elementId);
+        QString imageName = ":/inputs/VCC.png";
         elementView->setPixmap(imageName);
         elementView->setPos(pos);
         m_scene->addItem(elementView);
+        m_circuitElements.push_back(elementView);
         return true;
     }
 

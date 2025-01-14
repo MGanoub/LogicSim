@@ -80,8 +80,6 @@ namespace UI::CustomWidgets
         setEndPort(connectionItem);
         connectionItem->setBrush(Qt::green);
         connectionItem->update();
-        auto *elementView = static_cast<UI::CustomWidgets::ElementView *>(connectionItem->parentObject());
-        elementView->setPixmap(":/outputs/WhiteLedOn.png");
     }
 
 }

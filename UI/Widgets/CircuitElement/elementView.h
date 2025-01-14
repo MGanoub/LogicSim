@@ -24,6 +24,8 @@ namespace UI::CustomWidgets
         void setPixmap(const QString &pixmapPath);
         int getId();
 
+        virtual void setOutputState(Core::Circuit::State state);
+
         int type() const override
         {
             return Type;

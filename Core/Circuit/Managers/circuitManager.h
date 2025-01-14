@@ -5,6 +5,8 @@
 #include "Core/Circuit/elementTypeEnum.h"
 #include <memory>
 #include <vector>
+#include "Core/Circuit/Components/Output/outputComponent.h"
+
 namespace Core::Circuit
 {
     class CircuitManager
@@ -17,6 +19,7 @@ namespace Core::Circuit
         bool addConnection(int firstCompIdent, int secondCompIdent, int secondCompPortNumber);
         void update();
         std::vector<Component *> getComponentsList();
+        std::vector<OutputComponent *> getOutputComponentsList();
 
     private:
         std::vector<Component *> m_components;

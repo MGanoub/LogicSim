@@ -4,7 +4,7 @@
 #include "UI/Widgets/sceneWidget.h"
 #include <QGraphicsScene>
 #include <QObject>
-
+#include <vector>
 namespace Core::Circuit
 {
     class CircuitManager;
@@ -13,6 +13,7 @@ namespace UI
 {
     namespace CustomWidgets
     {
+        class ElementView;
         class ElementConnection;
     }
     class SceneEditor : public QObject
@@ -28,6 +29,7 @@ namespace UI
         UI::CustomWidgets::ElementConnection *m_connection;
         bool m_isWireConnectionInProgress = false;
         QList<UI::CustomWidgets::ElementConnection *> m_connectionsList;
+        std::vector<UI::CustomWidgets::ElementView *> m_circuitElements;
         Core::Circuit::CircuitManager *m_circuitManager;
 
         bool handleDropEvent(QEvent *event);
@@ -43,6 +45,8 @@ namespace UI
         bool hasConnectionStarted();
         UI::CustomWidgets::ElementConnection *getConnectionInEdit();
         void resetConnectionStatus();
+
+        void updateElementsInScene();
     };
 }
 
