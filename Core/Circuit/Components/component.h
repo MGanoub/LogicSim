@@ -17,7 +17,7 @@ namespace Core::Circuit
         };
         Component() = default;
         Component(Type type);
-        Component(Component&& other);
+        Component(Component &&other);
 
         int getIndentifier() override;
         virtual void setType(Component::Type type);

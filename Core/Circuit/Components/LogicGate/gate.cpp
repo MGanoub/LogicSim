@@ -17,6 +17,7 @@ namespace Core::Circuit
     void LogicGate::setOutputState(State state)
     {
         m_outState = state;
+        m_outputPort.setState(m_outState);
     }
     Port *LogicGate::getOutputPort()
     {

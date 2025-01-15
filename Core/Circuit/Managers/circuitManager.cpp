@@ -1,11 +1,11 @@
 
 #include "Core/Circuit/Managers/circuitManager.h"
 #include "Core/Circuit/Components/componentsFactory.h"
-
-#include "Core/Circuit/Components/Input/VCCInput.h"
-#include "Core/Circuit/Components/LogicGate/gate.h"
-#include "Core/Circuit/Components/Output/led.h"
 #include <algorithm>
+#include <Core/Circuit/Components/Input/inputComponent.h>
+#include <Core/Circuit/Components/Output/outputComponent.h>
+#include <Core/Circuit/Components/LogicGate/gate.h>
+
 namespace Core::Circuit
 {
     CircuitManager::CircuitManager()
