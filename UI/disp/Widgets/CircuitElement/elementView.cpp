@@ -5,8 +5,15 @@
 
 namespace UI::CustomWidgets
 {
-    ElementView::ElementView(Core::Circuit::ElementType type, int inputPortCount, int identifier, QGraphicsItem *parent)
-        : QGraphicsObject(parent), m_type(type), m_inputPortsCount(inputPortCount), m_identifier(identifier)
+    ElementView::ElementView(Core::Circuit::ElementType type, int inputPortCount, int outPutPortCount, int identifier, QGraphicsItem *parent)
+        : QGraphicsObject(parent),
+          m_type(type),
+          m_inputPortsCount(inputPortCount),
+          m_outPutPortCount(outPutPortCount),
+          m_identifier(identifier),
+          m_pixmapWidth(64),
+          m_pixmapHeight(64),
+          m_maxPortsToDisplayOnOneSide(6)
     {
         addPorts();
     }
@@ -43,6 +50,7 @@ namespace UI::CustomWidgets
     void ElementView::setPixmap(const QString &pixmapPath)
     {
         m_pixmap = new QPixmap(pixmapPath);
+        m_pixmap->scaled(m_pixmapWidth, m_pixmapHeight, Qt::KeepAspectRatio);
     }
 
     void ElementView::addPorts()
@@ -52,7 +60,20 @@ namespace UI::CustomWidgets
             {
                 auto *port = new ElementPort(ElementPort::PortType::INPUTPORT, this);
                 port->setIndex(i);
-                port->setPos(32, 0);
+                int dt = m_pixmapHeight / m_inputPortsCount;
+                int posY = (0.5 * dt) + (i * dt);
+                port->setPos(0, posY);
+                port->update();
+                // updatePorts();
+                port->show();
+            }
+        }
+        for (int i = 0; i < m_outPutPortCount; i++)
+        {
+            {
+                auto *port = new ElementPort(ElementPort::PortType::OUTPUTPORT, this);
+                port->setIndex(i);
+                port->setPos(64, 32);
                 port->update();
                 // updatePorts();
                 port->show();

@@ -26,6 +26,6 @@ namespace UI
             break;
         }
         int unknownElementTypeIdentifier = -1;
-        return new UI::CustomWidgets::ElementView(type, elementId, unknownElementTypeIdentifier, parent);
+        return new UI::CustomWidgets::ElementView(type, 0, 0, unknownElementTypeIdentifier, parent);
     }
 }

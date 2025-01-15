@@ -208,7 +208,7 @@ namespace UI
             return true;
         }
 
-        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 1, elementId);
+        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 0, 1, elementId);
         QString imageName = ":/inputs/VCC.png";
         elementView->setPixmap(imageName);
         elementView->setPos(pos);

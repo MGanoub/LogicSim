@@ -16,7 +16,7 @@ namespace UI::CustomWidgets
         };
 
     public:
-        explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, int identifier, QGraphicsItem *parent = nullptr);
+        explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, int outPutPortCount, int identifier, QGraphicsItem *parent = nullptr);
 
         QRectF boundingRect() const override;
 
@@ -34,7 +34,11 @@ namespace UI::CustomWidgets
     private:
         Core::Circuit::ElementType m_type;
         QPixmap *m_pixmap;
+        int m_pixmapWidth;
+        int m_pixmapHeight;
+        int m_maxPortsToDisplayOnOneSide;
         int m_inputPortsCount;
+        int m_outPutPortCount;
         int m_identifier;
 
         void addPorts();
