@@ -3,6 +3,7 @@
 #include "Core/Circuit/Components/componentsFactory.h"
 
 #include "Core/Circuit/Components/Input/VCCInput.h"
+#include "Core/Circuit/Components/LogicGate/gate.h"
 #include "Core/Circuit/Components/Output/led.h"
 #include <algorithm>
 namespace Core::Circuit
@@ -43,11 +44,33 @@ namespace Core::Circuit
         {
             return false;
         }
+        Port *outputPort, *inputPort;
+        if ((*firstComp)->getType() == Component::Type::INPUT)
+        {
+            auto *inputComp = static_cast<InputComponent *>(*firstComp);
+            outputPort = inputComp->getOutputPort();
+        }
+        if ((*firstComp)->getType() == Component::Type::LOGIC_GATE)
+        {
+            auto *inputComp = static_cast<LogicGate *>(*firstComp);
+            outputPort = inputComp->getOutputPort();
+        }
+        if ((*secondComp)->getType() == Component::Type::LOGIC_GATE)
+        {
+            auto *outputComp = static_cast<LogicGate *>(*secondComp);
+            inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
+        }
+        if ((*secondComp)->getType() == Component::Type::OUTPUT)
+        {
+            auto *outputComp = static_cast<LogicGate *>(*secondComp);
+            inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
+        }
+        /*
         auto *inputComp = static_cast<InputComponent *>(*firstComp);
         auto *outputComp = static_cast<OutputComponent *>(*secondComp);
-        Port *outputPort = inputComp->getOutputPort();
-        Port *inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
-
+        outputPort = inputComp->getOutputPort();
+        inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
+        */
         if (outputPort->isConnected() || inputPort->isConnected())
         {
             return false;
@@ -60,11 +83,20 @@ namespace Core::Circuit
     {
         for (auto *comp : m_components)
         {
+            if (comp->getType() == Component::Type::LOGIC_GATE)
+            {
+                auto *outputComp = static_cast<LogicGate *>(comp);
+                outputComp->computeOutputState();
+            }
+        }
+        for (auto *comp : m_components)
+        {
             if (comp->getType() == Component::Type::OUTPUT)
             {
                 auto *outputComp = static_cast<OutputComponent *>(comp);
                 outputComp->computeOutputState();
             }
+
         }
     }
 
