@@ -53,7 +53,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/Components/componentsFactory.h Core/Circuit/Components/componentsFactory.cpp
         UI/disp/Widgets/CircuitElement/elementFactory.h UI/disp/Widgets/CircuitElement/elementFactory.cpp
         UI/disp/Widgets/CircuitElement/InputElements/vccView.h UI/disp/Widgets/CircuitElement/InputElements/vccView.cpp
-        UI/disp/Widgets/CircuitElement/LogicGates/andGate.h UI/disp/Widgets/CircuitElement/LogicGates/andGate.cpp
+        UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h UI/disp/Widgets/CircuitElement/LogicGates/andGateView.cpp
+        Core/Circuit/Components/LogicGate/gate.h Core/Circuit/Components/LogicGate/gate.cpp
+        Core/Circuit/Components/LogicGate/andGate.h Core/Circuit/Components/LogicGate/andGate.cpp
 
 
     )

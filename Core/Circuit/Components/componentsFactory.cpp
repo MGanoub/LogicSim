@@ -1,5 +1,6 @@
 #include "componentsFactory.h"
 #include "Core/Circuit/Components/Input/VCCInput.h"
+#include "Core/Circuit/Components/LogicGate/andGate.h"
 #include "Core/Circuit/Components/Output/led.h"
 
 namespace Core::Circuit
@@ -23,7 +24,7 @@ namespace Core::Circuit
         }
         case ElementType::AND_GATE:
         {
-            return new LED();
+            return new ANDGate();
         }
         case ElementType::UNKNOWN:
         default:

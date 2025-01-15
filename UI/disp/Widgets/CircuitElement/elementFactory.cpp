@@ -1,6 +1,6 @@
 #include "elementFactory.h"
 #include "UI/disp/Widgets/CircuitElement/InputElements/vccView.h"
-#include "UI/disp/Widgets/CircuitElement/LogicGates/andGate.h"
+#include "UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h"
 #include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 
 namespace UI
@@ -25,7 +25,7 @@ namespace UI
         }
         case Core::Circuit::ElementType::AND_GATE:
         {
-            return new UI::CircuitElements::ANDGate(elementId, parent);
+            return new UI::CircuitElements::ANDGateView(elementId, parent);
         }
         case Core::Circuit::ElementType::UNKNOWN:
         default:
