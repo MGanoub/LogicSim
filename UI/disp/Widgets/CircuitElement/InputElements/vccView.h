@@ -5,10 +5,11 @@
 
 namespace UI::CircuitElements
 {
-    class VCCView : public UI::CustomWidgets::ElementView
+    class VCCView : public ElementView
     {
     public:
         VCCView(int elementId, QGraphicsItem *parent = nullptr);
+        void setVisualState(Core::Circuit::State state) override;
     };
 }
 #endif // VCCVIEW_H

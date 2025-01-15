@@ -80,10 +80,10 @@ namespace UI
         }
         if (isItemAnElementPort(item) && !hasConnectionStarted())
         {
-            auto *connection = new UI::CustomWidgets::ElementConnection();
+            auto *connection = new UI::CircuitElements::ElementConnection();
             setConnectionInEdit(connection);
 
-            auto *port = static_cast<UI::CustomWidgets::ElementPort *>(item);
+            auto *port = static_cast<UI::CircuitElements::ElementPort *>(item);
             port->updateBrush();
             connection->setStartPort(port);
             m_scene->addItem(connection);
@@ -95,11 +95,11 @@ namespace UI
     {
         return m_isWireConnectionInProgress;
     }
-    UI::CustomWidgets::ElementConnection *SceneEditor::getConnectionInEdit()
+    UI::CircuitElements::ElementConnection *SceneEditor::getConnectionInEdit()
     {
         return m_connection;
     }
-    void SceneEditor::setConnectionInEdit(UI::CustomWidgets::ElementConnection *connection)
+    void SceneEditor::setConnectionInEdit(UI::CircuitElements::ElementConnection *connection)
     {
         m_connection = connection;
         m_isWireConnectionInProgress = true;
@@ -127,14 +127,14 @@ namespace UI
         if (hasConnectionStarted())
         {
             auto *item = getSceneItemAtPos(mousePos);
-            if (item->type() != UI::CustomWidgets::ElementPort::GraphicalType)
+            if (item->type() != UI::CircuitElements::ElementPort::GraphicalType)
             {
                 removeConnection();
                 return true;
             }
             auto *connection = getConnectionInEdit();
             auto *outputPort = connection->getStartPort();
-            auto *inputPort = static_cast<UI::CustomWidgets::ElementPort *>(item);
+            auto *inputPort = static_cast<UI::CircuitElements::ElementPort *>(item);
             auto *outputComp = outputPort->getParent();
             auto *inputComp = inputPort->getParent();
             const auto isConnectionMade = m_circuitManager->addConnection(outputComp->getId(), inputComp->getId(), inputPort->getIndex());
@@ -159,11 +159,11 @@ namespace UI
         const auto outputList = m_circuitManager->getOutputComponentsList();
         for (auto outputElement : outputList)
         {
-            auto elementItr = std::find_if(m_circuitElements.begin(), m_circuitElements.end(), [&](UI::CustomWidgets::ElementView *element)
+            auto elementItr = std::find_if(m_circuitElements.begin(), m_circuitElements.end(), [&](UI::CircuitElements::ElementView *element)
                                            { return (element->getId() == outputElement->getIndentifier()); });
             if (elementItr != m_circuitElements.end())
             {
-                (*elementItr)->setOutputState(outputElement->getOutState());
+                (*elementItr)->setVisualState(outputElement->getOutState());
             }
         }
     }
@@ -192,25 +192,19 @@ namespace UI
         QByteArray itemData = dragDropevent->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
         QPointF offset;
-        qint32 type;
+        int type;
         dataStream >> offset >> type;
         QPointF pos = dragDropevent->scenePos() - offset;
         event->accept();
 
-        auto elementType = (type == 11) ? Core::Circuit::ElementType::LED : Core::Circuit::ElementType::VCC;
+        const auto elementType = static_cast<Core::Circuit::ElementType>(type);
         auto elementId = m_circuitManager->addComponent(elementType);
-        if (type == 11 && elementId)
+        if (!elementId)
         {
-            auto *elementView = UI::ElementFactory::getInstance().createElement(elementType, elementId);
-            elementView->setPos(pos);
-            m_scene->addItem(elementView);
-            m_circuitElements.push_back(elementView);
-            return true;
+            return false;
         }
 
-        auto *elementView = new UI::CustomWidgets::ElementView(Core::Circuit::ElementType::VCC, 0, 1, elementId);
-        QString imageName = ":/inputs/VCC.png";
-        elementView->setPixmap(imageName);
+        auto *elementView = UI::ElementFactory::getInstance().createElement(elementType, elementId);
         elementView->setPos(pos);
         m_scene->addItem(elementView);
         m_circuitElements.push_back(elementView);
@@ -233,6 +227,6 @@ namespace UI
 
     bool SceneEditor::isItemAnElementPort(QGraphicsItem *item)
     {
-        return item->type() == UI::CustomWidgets::ElementPort::GraphicalType;
+        return item->type() == UI::CircuitElements::ElementPort::GraphicalType;
     }
 }

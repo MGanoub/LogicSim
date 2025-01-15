@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     ElementView::ElementView(Core::Circuit::ElementType type, int inputPortCount, int outPutPortCount, int identifier, QGraphicsItem *parent)
         : QGraphicsObject(parent),
@@ -90,7 +90,7 @@ namespace UI::CustomWidgets
         // port->update();
     }
 
-    void ElementView::setOutputState(Core::Circuit::State state)
+    void ElementView::setVisualState(Core::Circuit::State state)
     {
     }
 }

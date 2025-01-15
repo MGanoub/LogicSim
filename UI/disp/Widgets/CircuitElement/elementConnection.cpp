@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     ElementConnection::ElementConnection(QGraphicsItem *parent)
         : QGraphicsPathItem(parent), m_startPort(nullptr), m_endPort(nullptr)

@@ -4,7 +4,7 @@
 #include "Core/Circuit/elementTypeEnum.h"
 #include <QGraphicsObject>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     class ElementView : public QGraphicsObject
     {
@@ -24,7 +24,7 @@ namespace UI::CustomWidgets
         void setPixmap(const QString &pixmapPath);
         int getId();
 
-        virtual void setOutputState(Core::Circuit::State state);
+        virtual void setVisualState(Core::Circuit::State state);
 
         int type() const override
         {

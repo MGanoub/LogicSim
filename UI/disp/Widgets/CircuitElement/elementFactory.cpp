@@ -1,4 +1,6 @@
 #include "elementFactory.h"
+#include "UI/disp/Widgets/CircuitElement/InputElements/vccView.h"
+#include "UI/disp/Widgets/CircuitElement/LogicGates/andGate.h"
 #include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 
 namespace UI
@@ -9,23 +11,27 @@ namespace UI
         return s_instance;
     }
 
-    UI::CustomWidgets::ElementView *ElementFactory::createElement(Core::Circuit::ElementType type, int elementId, QGraphicsItem *parent)
+    UI::CircuitElements::ElementView *ElementFactory::createElement(Core::Circuit::ElementType type, int elementId, QGraphicsItem *parent)
     {
         switch (type)
         {
         case Core::Circuit::ElementType::VCC:
         {
-            return new UI::CircuitElements::LEDView(elementId, parent);
+            return new UI::CircuitElements::VCCView(elementId, parent);
         }
         case Core::Circuit::ElementType::LED:
         {
             return new UI::CircuitElements::LEDView(elementId, parent);
+        }
+        case Core::Circuit::ElementType::AND_GATE:
+        {
+            return new UI::CircuitElements::ANDGate(elementId, parent);
         }
         case Core::Circuit::ElementType::UNKNOWN:
         default:
             break;
         }
         int unknownElementTypeIdentifier = -1;
-        return new UI::CustomWidgets::ElementView(type, 0, 0, unknownElementTypeIdentifier, parent);
+        return new UI::CircuitElements::ElementView(type, 0, 0, unknownElementTypeIdentifier, parent);
     }
 }

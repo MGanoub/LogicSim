@@ -5,10 +5,10 @@ namespace UI::CircuitElements
     LEDView::LEDView(int elementId, QGraphicsItem *parent)
         : ElementView(Core::Circuit::ElementType::LED, 1, 0, elementId, parent)
     {
-        setOutputState(Core::Circuit::State::OFF);
+        setVisualState(Core::Circuit::State::OFF);
     }
 
-    void LEDView::setOutputState(Core::Circuit::State state)
+    void LEDView::setVisualState(Core::Circuit::State state)
     {
         switch (state)
         {

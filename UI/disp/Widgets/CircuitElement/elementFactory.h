@@ -16,7 +16,7 @@ namespace UI
         ElementFactory &operator=(ElementFactory const &&) = delete;
 
         static ElementFactory &getInstance();
-        UI::CustomWidgets::ElementView *createElement(Core::Circuit::ElementType type, int elementId, QGraphicsItem *parent = nullptr);
+        UI::CircuitElements::ElementView *createElement(Core::Circuit::ElementType type, int elementId, QGraphicsItem *parent = nullptr);
 
     private:
         ElementFactory() = default;

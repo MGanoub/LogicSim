@@ -2,7 +2,7 @@
 #include <QGraphicsItem>
 #include <QPen>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     ElementPort::ElementPort(ElementPort::PortType type, ElementView *parent)
         : QGraphicsPathItem(parent), m_parent(parent), m_radius(5), m_margin(2), m_portType(type)

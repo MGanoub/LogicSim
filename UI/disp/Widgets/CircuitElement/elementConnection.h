@@ -3,7 +3,7 @@
 
 #include <QGraphicsPathItem>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     class ElementPort;
     class ElementConnection : public QGraphicsPathItem
@@ -25,7 +25,7 @@ namespace UI::CustomWidgets
         ElementPort *getEndPort();
 
         void updatePath();
-        void makeConnection(UI::CustomWidgets::ElementPort *ConnectionItem);
+        void makeConnection(ElementPort *ConnectionItem);
 
         int type() const override
         {

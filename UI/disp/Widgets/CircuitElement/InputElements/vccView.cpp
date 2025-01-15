@@ -5,7 +5,20 @@ namespace UI::CircuitElements
     VCCView::VCCView(int elementId, QGraphicsItem *parent)
         : ElementView(Core::Circuit::ElementType::LED, 0, 1, elementId, parent)
     {
-        setOutputState(Core::Circuit::State::ON);
+        setVisualState(Core::Circuit::State::ON);
     }
 
+    void VCCView::setVisualState(Core::Circuit::State state)
+    {
+        switch (state)
+        {
+        case Core::Circuit::State::ON:
+        {
+            setPixmap(":/inputs/VCC.png");
+            break;
+        }
+        default:
+            break;
+        }
+    }
 }

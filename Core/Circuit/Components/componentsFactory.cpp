@@ -21,6 +21,10 @@ namespace Core::Circuit
         {
             return new LED();
         }
+        case ElementType::AND_GATE:
+        {
+            return new LED();
+        }
         case ElementType::UNKNOWN:
         default:
             break;

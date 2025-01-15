@@ -4,7 +4,7 @@
 #include "elementView.h"
 #include <QGraphicsPathItem>
 
-namespace UI::CustomWidgets
+namespace UI::CircuitElements
 {
     class ElementPort : public QGraphicsPathItem
     {

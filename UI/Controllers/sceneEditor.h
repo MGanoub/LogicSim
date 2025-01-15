@@ -13,7 +13,7 @@ namespace Core::Circuit
 }
 namespace UI
 {
-    namespace CustomWidgets
+    namespace CircuitElements
     {
         class ElementView;
         class ElementConnection;
@@ -29,10 +29,10 @@ namespace UI
     private:
         UI::CustomWidgets::sceneWidget *m_scene;
         QGraphicsView *m_graphicsView;
-        UI::CustomWidgets::ElementConnection *m_connection;
+        UI::CircuitElements::ElementConnection *m_connection;
         bool m_isWireConnectionInProgress = false;
-        QList<UI::CustomWidgets::ElementConnection *> m_connectionsList;
-        std::vector<UI::CustomWidgets::ElementView *> m_circuitElements;
+        QList<UI::CircuitElements::ElementConnection *> m_connectionsList;
+        std::vector<UI::CircuitElements::ElementView *> m_circuitElements;
         Core::Circuit::CircuitManager *m_circuitManager;
 
         bool handleDropEvent(QEvent *event);
@@ -43,10 +43,10 @@ namespace UI
         QGraphicsItem *getSceneItemAtPos(const QPointF PosPoint);
         bool isItemAnElementPort(QGraphicsItem *item);
 
-        void setConnectionInEdit(UI::CustomWidgets::ElementConnection *connection);
+        void setConnectionInEdit(UI::CircuitElements::ElementConnection *connection);
         void removeConnection();
         bool hasConnectionStarted();
-        UI::CustomWidgets::ElementConnection *getConnectionInEdit();
+        UI::CircuitElements::ElementConnection *getConnectionInEdit();
         void resetConnectionStatus();
 
         void updateElementsInScene();

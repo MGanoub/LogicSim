@@ -1,4 +1,5 @@
 #include "componentsMenuContainer.h"
+#include "Core/Circuit/elementTypeEnum.h"
 #include "UI/disp/Widgets/listItemWidget.h"
 namespace UI
 {
@@ -18,11 +19,12 @@ namespace UI
 
     void ComponentsMenuContainer::populateComponentsMenu()
     {
-        auto *vccItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/VCC.png"), 10, QString("VCC"), m_menuViewWidget);
-        auto *ledItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/outputs/WhiteLedOff.png"), 11, QString("LED"), m_menuViewWidget);
+        auto *vccItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/VCC.png"), static_cast<int>(Core::Circuit::ElementType::VCC), QString("VCC"), m_menuViewWidget);
+        auto *ledItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/outputs/WhiteLedOff.png"), static_cast<int>(Core::Circuit::ElementType::LED), QString("LED"), m_menuViewWidget);
+        auto *andGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/ANDGate.png"), static_cast<int>(Core::Circuit::ElementType::AND_GATE), QString("AND Gate"), m_menuViewWidget);
         m_componentMenuWidget->addListItem(vccItem);
         m_componentMenuWidget->addListItem(ledItem);
-        // m_componentMenuWidget->addListItem(ui->icTabVerticalSpacer);
+        m_componentMenuWidget->addListItem(andGate);
 
         m_icTabListItemWidgets.push_back(vccItem);
     }
