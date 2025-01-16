@@ -10,7 +10,6 @@ namespace Core::Circuit
     public:
         ANDGate();
         void computeOutputState() override;
-        void updateInputPortsState();
     };
 }
 #endif // ANDGATE_H

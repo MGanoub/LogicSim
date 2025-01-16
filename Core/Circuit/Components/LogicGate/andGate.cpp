@@ -8,6 +8,11 @@ namespace Core::Circuit
     }
     void ANDGate::computeOutputState()
     {
+        if (!areAllInputPortsConnected())
+        {
+            setOutputState(State::OFF);
+            return;
+        }
         updateInputPortsState();
         bool outputState = true;
         for (auto input : m_inputPorts)
@@ -16,15 +21,5 @@ namespace Core::Circuit
         }
         m_outState = (outputState) ? State::ON : State::OFF;
         m_outputPort.setState(m_outState);
-    }
-    void ANDGate::updateInputPortsState()
-    {
-        for (auto &port : m_inputPorts)
-        {
-            if (port.isConnected())
-            {
-                port.updateState();
-            }
-        }
     }
 }

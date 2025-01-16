@@ -1,6 +1,8 @@
 #include "elementFactory.h"
+#include "UI/disp/Widgets/CircuitElement/InputElements/gndView.h"
 #include "UI/disp/Widgets/CircuitElement/InputElements/vccView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h"
+#include "UI/disp/Widgets/CircuitElement/LogicGates/orGateView.h"
 #include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 
 namespace UI
@@ -19,6 +21,10 @@ namespace UI
         {
             return new UI::CircuitElements::VCCView(elementId, parent);
         }
+        case Core::Circuit::ElementType::GND:
+        {
+            return new UI::CircuitElements::GNDView(elementId, parent);
+        }
         case Core::Circuit::ElementType::LED:
         {
             return new UI::CircuitElements::LEDView(elementId, parent);
@@ -26,6 +32,10 @@ namespace UI
         case Core::Circuit::ElementType::AND_GATE:
         {
             return new UI::CircuitElements::ANDGateView(elementId, parent);
+        }
+        case Core::Circuit::ElementType::OR_GATE:
+        {
+            return new UI::CircuitElements::ORGateView(elementId, parent);
         }
         case Core::Circuit::ElementType::UNKNOWN:
         default:

@@ -7,9 +7,11 @@ namespace Core::Circuit
     {
         UNKNOWN,
         VCC,
+        GND,
         BUTTON,
         LED,
         AND_GATE,
+        OR_GATE,
         MAXITEM
     };
 

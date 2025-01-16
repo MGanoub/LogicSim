@@ -65,4 +65,26 @@ namespace Core::Circuit
         }
     }
 
+    void LogicGate::updateInputPortsState()
+    {
+        for (auto &port : m_inputPorts)
+        {
+            if (port.isConnected())
+            {
+                port.updateState();
+            }
+        }
+    }
+    bool LogicGate::areAllInputPortsConnected()
+    {
+        for (auto &port : m_inputPorts)
+        {
+            if (!port.isConnected())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -10,15 +10,6 @@ namespace UI::CircuitElements
 
     void VCCView::setVisualState(Core::Circuit::State state)
     {
-        switch (state)
-        {
-        case Core::Circuit::State::ON:
-        {
-            setPixmap(":/inputs/VCC.png");
-            break;
-        }
-        default:
-            break;
-        }
+        setPixmap(":/inputs/VCC.png");
     }
 }

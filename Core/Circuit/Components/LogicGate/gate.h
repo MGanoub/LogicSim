@@ -30,6 +30,8 @@ namespace Core::Circuit
         Port m_outputPort;
 
         void createInputPorts();
+        void updateInputPortsState();
+        bool areAllInputPortsConnected();
     };
 }
 #endif // LogicGate_H

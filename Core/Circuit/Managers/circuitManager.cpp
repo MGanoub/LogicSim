@@ -1,10 +1,10 @@
 
 #include "Core/Circuit/Managers/circuitManager.h"
 #include "Core/Circuit/Components/componentsFactory.h"
-#include <algorithm>
 #include <Core/Circuit/Components/Input/inputComponent.h>
-#include <Core/Circuit/Components/Output/outputComponent.h>
 #include <Core/Circuit/Components/LogicGate/gate.h>
+#include <Core/Circuit/Components/Output/outputComponent.h>
+#include <algorithm>
 
 namespace Core::Circuit
 {
@@ -96,7 +96,6 @@ namespace Core::Circuit
                 auto *outputComp = static_cast<OutputComponent *>(comp);
                 outputComp->computeOutputState();
             }
-
         }
     }
 
