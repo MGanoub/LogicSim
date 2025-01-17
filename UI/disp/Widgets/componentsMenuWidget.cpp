@@ -10,7 +10,7 @@ namespace UI::CustomWidgets
 
         setObjectName("icTab");
         setCursor(QCursor(Qt::ArrowCursor));
-        m_verticalLayout->setSpacing(1);
+        m_verticalLayout->setSpacing(15);
         m_verticalLayout->setContentsMargins(-1, 2, -1, 2);
         m_verticalLayout->addItem(m_verticalSpacer);
     }
