@@ -88,4 +88,12 @@ namespace UI::CircuitElements
     void ElementView::setVisualState(Core::Circuit::State state)
     {
     }
+    void ElementView::setAudioState(Core::Circuit::State state)
+    {
+    }
+    void ElementView::setState(Core::Circuit::State state)
+    {
+        setVisualState(state);
+        setAudioState(state);
+    }
 }

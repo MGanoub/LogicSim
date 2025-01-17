@@ -4,6 +4,7 @@
 #include "Core/Circuit/Components/LogicGate/andGate.h"
 #include "Core/Circuit/Components/LogicGate/notGate.h"
 #include "Core/Circuit/Components/LogicGate/orGate.h"
+#include "Core/Circuit/Components/Output/buzzer.h"
 #include "Core/Circuit/Components/Output/led.h"
 
 namespace Core::Circuit
@@ -24,6 +25,10 @@ namespace Core::Circuit
         case ElementType::LED:
         {
             return std::make_unique<LED>();
+        }
+        case ElementType::BUZZER:
+        {
+            return std::make_unique<Buzzer>();
         }
         case ElementType::AND_GATE:
         {

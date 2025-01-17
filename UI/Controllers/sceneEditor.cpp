@@ -219,7 +219,7 @@ namespace UI
                                            { return (element->getId() == component->getIndentifier()); });
             if (elementItr != m_circuitElements.end())
             {
-                (*elementItr)->setVisualState(component->getState());
+                (*elementItr)->setState(component->getState());
                 (*elementItr)->update();
             }
         }

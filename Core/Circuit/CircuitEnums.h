@@ -10,6 +10,7 @@ namespace Core::Circuit
         GND,
         BUTTON,
         LED,
+        BUZZER,
         AND_GATE,
         OR_GATE,
         NOT_GATE,

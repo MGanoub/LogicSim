@@ -33,6 +33,7 @@ namespace UI
         ResourceInfo getORGateResource();
         ResourceInfo getNOTGateResource();
         ResourceInfo getLEDResource();
+        ResourceInfo getBuzzerResource();
     };
 }
 

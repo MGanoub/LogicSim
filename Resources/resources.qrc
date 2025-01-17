@@ -5,6 +5,9 @@
          <file>inputs/GND.png</file>
          <file>outputs/WhiteLedOff.png</file>
          <file>outputs/WhiteLedOn.png</file>
+          <file>outputs/BuzzerOn.png</file>
+          <file>outputs/BuzzerOff.png</file>
+         <file>outputs/buzzerAudio/buzzerTone.wav</file>
          <file>LogicGates/ANDGate.png</file>
          <file>LogicGates/ORGate.png</file>
          <file>LogicGates/NOTGate.png</file>

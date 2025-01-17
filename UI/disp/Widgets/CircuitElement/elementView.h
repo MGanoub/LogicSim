@@ -25,6 +25,8 @@ namespace UI::CircuitElements
         int getId();
 
         virtual void setVisualState(Core::Circuit::State state);
+        virtual void setAudioState(Core::Circuit::State state);
+        void setState(Core::Circuit::State state);
 
         int type() const override
         {

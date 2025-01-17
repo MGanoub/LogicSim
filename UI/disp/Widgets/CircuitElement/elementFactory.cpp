@@ -4,6 +4,7 @@
 #include "UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/orGateView.h"
+#include "UI/disp/Widgets/CircuitElement/OutputElements/buzzerView.h"
 #include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 
 namespace UI
@@ -29,6 +30,10 @@ namespace UI
         case Core::Circuit::ElementType::LED:
         {
             return new UI::CircuitElements::LEDView(elementId, parent);
+        }
+        case Core::Circuit::ElementType::BUZZER:
+        {
+            return new UI::CircuitElements::BuzzerView(elementId, parent);
         }
         case Core::Circuit::ElementType::AND_GATE:
         {

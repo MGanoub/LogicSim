@@ -7,8 +7,8 @@ namespace UI
         return {
             Core::Circuit::ElementType::VCC,
             Core::Circuit::ElementType::GND,
-
             Core::Circuit::ElementType::LED,
+            Core::Circuit::ElementType::BUZZER,
         };
     }
     std::vector<Core::Circuit::ElementType> ComponentModel::getAvailableLogicGateComponents()

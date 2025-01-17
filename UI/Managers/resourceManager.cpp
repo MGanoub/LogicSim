@@ -20,6 +20,10 @@ namespace UI
         {
             return getLEDResource();
         }
+        case Core::Circuit::ElementType::BUZZER:
+        {
+            return getBuzzerResource();
+        }
         case Core::Circuit::ElementType::AND_GATE:
         {
             return getANDGateResource();
@@ -68,6 +72,15 @@ namespace UI
             QString(":/outputs/WhiteLedOn.png"),
             QString(":/outputs/WhiteLedOff.png"),
             QString()};
+    }
+
+    ResourceManager::ResourceInfo ResourceManager::getBuzzerResource()
+    {
+        return {
+            QString("Buzzer"),
+            QString(":/outputs/BuzzerOn.png"),
+            QString(":/outputs/BuzzerOff.png"),
+            QString(":/outputs/buzzerAudio/buzzerTone.wav")};
     }
 
     ResourceManager::ResourceInfo ResourceManager::getANDGateResource()
