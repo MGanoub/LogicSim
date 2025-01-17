@@ -12,6 +12,7 @@ namespace Core::Circuit
         LED,
         AND_GATE,
         OR_GATE,
+        NOT_GATE,
         MAXITEM
     };
 

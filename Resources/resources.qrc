@@ -7,5 +7,6 @@
          <file>outputs/WhiteLedOn.png</file>
          <file>LogicGates/ANDGate.png</file>
          <file>LogicGates/ORGate.png</file>
+         <file>LogicGates/NOTGate.png</file>
     </qresource>
 </RCC>

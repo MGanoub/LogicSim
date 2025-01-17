@@ -2,6 +2,7 @@
 #include "Core/Circuit/Components/Input/GNDInput.h"
 #include "Core/Circuit/Components/Input/VCCInput.h"
 #include "Core/Circuit/Components/LogicGate/andGate.h"
+#include "Core/Circuit/Components/LogicGate/notGate.h"
 #include "Core/Circuit/Components/LogicGate/orGate.h"
 #include "Core/Circuit/Components/Output/led.h"
 
@@ -35,6 +36,10 @@ namespace Core::Circuit
         case ElementType::GND:
         {
             return std::make_unique<GNDInput>();
+        }
+        case ElementType::NOT_GATE:
+        {
+            return std::make_unique<NOTGate>();
         }
         case ElementType::UNKNOWN:
         default:

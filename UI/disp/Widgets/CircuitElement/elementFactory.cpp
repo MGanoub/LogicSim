@@ -2,6 +2,7 @@
 #include "UI/disp/Widgets/CircuitElement/InputElements/gndView.h"
 #include "UI/disp/Widgets/CircuitElement/InputElements/vccView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h"
+#include "UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/orGateView.h"
 #include "UI/disp/Widgets/CircuitElement/OutputElements/ledView.h"
 
@@ -36,6 +37,10 @@ namespace UI
         case Core::Circuit::ElementType::OR_GATE:
         {
             return new UI::CircuitElements::ORGateView(elementId, parent);
+        }
+        case Core::Circuit::ElementType::NOT_GATE:
+        {
+            return new UI::CircuitElements::NOTGateView(elementId, parent);
         }
         case Core::Circuit::ElementType::UNKNOWN:
         default:

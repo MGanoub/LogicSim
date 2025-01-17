@@ -48,7 +48,6 @@ namespace Core::Circuit
     }
     void Component::computeOutputState()
     {
-
     }
 
     bool Component::areAllInputPortsConnected()
@@ -68,7 +67,7 @@ namespace Core::Circuit
     {
         for (auto &port : m_portsList)
         {
-            if ((!port.isOutputType()) && port.isConnected())
+            if ((port.isInputType()) && port.isConnected())
             {
                 port.updateState();
             }

@@ -25,11 +25,13 @@ namespace UI
         auto *ledItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/outputs/WhiteLedOff.png"), static_cast<int>(Core::Circuit::ElementType::LED), QString("LED"), m_menuViewWidget);
         auto *andGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/ANDGate.png"), static_cast<int>(Core::Circuit::ElementType::AND_GATE), QString("AND Gate"), m_menuViewWidget);
         auto *orGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/ORGate.png"), static_cast<int>(Core::Circuit::ElementType::OR_GATE), QString("OR Gate"), m_menuViewWidget);
+        auto *notGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/NOTGate.png"), static_cast<int>(Core::Circuit::ElementType::NOT_GATE), QString("NOT Gate"), m_menuViewWidget);
         m_componentMenuWidget->addListItem(vccItem);
         m_componentMenuWidget->addListItem(gndItem);
         m_componentMenuWidget->addListItem(ledItem);
         m_componentMenuWidget->addListItem(andGate);
         m_componentMenuWidget->addListItem(orGate);
+        m_componentMenuWidget->addListItem(notGate);
 
         m_icTabListItemWidgets.push_back(vccItem);
     }

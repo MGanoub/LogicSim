@@ -60,6 +60,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/disp/Widgets/CircuitElement/LogicGates/orGateView.h UI/disp/Widgets/CircuitElement/LogicGates/orGateView.cpp
         UI/disp/Widgets/CircuitElement/InputElements/gndView.h UI/disp/Widgets/CircuitElement/InputElements/gndView.cpp
         Core/Circuit/Components/Input/gndInput.h Core/Circuit/Components/Input/gndInput.cpp
+        Core/Circuit/Components/LogicGate/notGate.h Core/Circuit/Components/LogicGate/notGate.cpp
+        UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h UI/disp/Widgets/CircuitElement/LogicGates/notGateView.cpp
 
 
     )

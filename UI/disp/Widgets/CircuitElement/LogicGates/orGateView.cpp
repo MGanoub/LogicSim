@@ -3,7 +3,7 @@
 namespace UI::CircuitElements
 {
     ORGateView::ORGateView(int elementId, QGraphicsItem *parent)
-        : ElementView(Core::Circuit::ElementType::LED, 2, 1, elementId, parent)
+        : ElementView(Core::Circuit::ElementType::OR_GATE, 2, 1, elementId, parent)
     {
         setVisualState(Core::Circuit::State::ON);
     }
