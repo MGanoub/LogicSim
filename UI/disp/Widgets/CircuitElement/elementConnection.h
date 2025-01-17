@@ -15,6 +15,7 @@ namespace UI::CircuitElements
         };
 
         explicit ElementConnection(QGraphicsItem *parent = nullptr);
+        ~ElementConnection();
 
         void setStartPort(ElementPort *port);
         void setEndPort(ElementPort *port);

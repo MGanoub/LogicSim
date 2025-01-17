@@ -28,6 +28,8 @@ namespace UI::CircuitElements
         ElementView *getParent();
         void setIndex(int portNumber);
         int getIndex();
+        void connected();
+        void disconnected();
 
     private:
         int m_radius;

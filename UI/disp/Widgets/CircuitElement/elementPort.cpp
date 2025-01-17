@@ -46,4 +46,14 @@ namespace UI::CircuitElements
         return m_index;
     }
 
+    void ElementPort::connected()
+    {
+        setBrush(Qt::green);
+        update();
+    }
+    void ElementPort::disconnected()
+    {
+        setBrush(Qt::red);
+        update();
+    }
 }

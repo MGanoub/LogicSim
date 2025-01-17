@@ -13,6 +13,11 @@ namespace UI::CircuitElements
         setPen(QPen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         setZValue(-1);
     }
+    ElementConnection::~ElementConnection()
+    {
+        m_endPort->disconnected();
+        m_startPort->disconnected();
+    }
 
     void ElementConnection::setStartPort(ElementPort *port)
     {
@@ -85,6 +90,8 @@ namespace UI::CircuitElements
             return;
         }
         setEndPort(connectionItem);
+        m_startPort->connected();
+        m_endPort->connected();
     }
 
     bool ElementConnection::isConnectedWith(int identifier)
