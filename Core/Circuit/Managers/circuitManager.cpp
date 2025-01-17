@@ -5,12 +5,10 @@
 
 namespace Core::Circuit
 {
-    CircuitManager::CircuitManager()
+    CircuitManager &CircuitManager::getInstance()
     {
-    }
-
-    CircuitManager::~CircuitManager()
-    {
+        static CircuitManager s_instance;
+        return s_instance;
     }
 
     int CircuitManager::addComponent(ElementType type)

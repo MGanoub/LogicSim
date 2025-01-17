@@ -33,7 +33,6 @@ namespace UI
         bool m_isWireConnectionInProgress = false;
         QList<UI::CircuitElements::ElementConnection *> m_connectionsList;
         std::vector<UI::CircuitElements::ElementView *> m_circuitElements;
-        Core::Circuit::CircuitManager *m_circuitManager;
 
         bool handleDropEvent(QEvent *event);
         bool handleMousePressEvent(QEvent *event);

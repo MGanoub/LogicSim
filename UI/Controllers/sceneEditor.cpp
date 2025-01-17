@@ -26,8 +26,6 @@ namespace UI
         {
             m_graphicsView->setScene(m_scene);
         }
-
-        m_circuitManager = new Core::Circuit::CircuitManager();
     }
 
     bool SceneEditor::eventFilter(QObject *obj, QEvent *evt)
@@ -147,7 +145,7 @@ namespace UI
         if (m_isItemSelected)
         {
             bool isElementSelected = false;
-            for(auto* item : m_scene->selectedItems())
+            for (auto *item : m_scene->selectedItems())
             {
                 if (item->type() == UI::CircuitElements::ElementView::Type)
                 {
@@ -155,7 +153,7 @@ namespace UI
                     item->setPos(mousePos);
                 }
             }
-            if(isElementSelected)
+            if (isElementSelected)
             {
                 for (auto *connection : m_connectionsList)
                 {
@@ -184,7 +182,7 @@ namespace UI
             auto *inputPort = static_cast<UI::CircuitElements::ElementPort *>(item);
             auto *outputComp = outputPort->getParent();
             auto *inputComp = inputPort->getParent();
-            const auto isConnectionMade = m_circuitManager->addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
+            const auto isConnectionMade = Core::Circuit::CircuitManager::getInstance().addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
 
             if (!isConnectionMade)
             {
@@ -201,7 +199,7 @@ namespace UI
 
     void SceneEditor::updateElementsInScene()
     {
-        const auto componentsList = m_circuitManager->getComponentsList();
+        const auto componentsList = Core::Circuit::CircuitManager::getInstance().getComponentsList();
         for (auto &component : componentsList)
         {
             auto elementItr = std::find_if(m_circuitElements.begin(), m_circuitElements.end(), [&](UI::CircuitElements::ElementView *element)
@@ -259,7 +257,7 @@ namespace UI
         auto *endPort = connection->getEndPort();
         const auto firstPortParent = startPort->getParent();
         const auto secondPortParent = endPort->getParent();
-        bool isConnectionRemoved = m_circuitManager->removeConnection(firstPortParent->getId(), startPort->getIndex(), secondPortParent->getId(), endPort->getIndex());
+        bool isConnectionRemoved = Core::Circuit::CircuitManager::getInstance().removeConnection(firstPortParent->getId(), startPort->getIndex(), secondPortParent->getId(), endPort->getIndex());
         if (isConnectionRemoved)
         {
             m_scene->removeItem(connection);
@@ -269,7 +267,7 @@ namespace UI
     }
     void SceneEditor::removeElement(UI::CircuitElements::ElementView *element)
     {
-        bool isElementRemoved = m_circuitManager->removeComponent(element->getId());
+        bool isElementRemoved = Core::Circuit::CircuitManager::getInstance().removeComponent(element->getId());
         if (isElementRemoved)
         {
             m_scene->removeItem(element);
@@ -296,7 +294,7 @@ namespace UI
         event->accept();
 
         const auto elementType = static_cast<Core::Circuit::ElementType>(type);
-        auto elementId = m_circuitManager->addComponent(elementType);
+        auto elementId = Core::Circuit::CircuitManager::getInstance().addComponent(elementType);
         if (!elementId)
         {
             return false;

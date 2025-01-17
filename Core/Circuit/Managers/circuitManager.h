@@ -11,8 +11,12 @@ namespace Core::Circuit
     class CircuitManager
     {
     public:
-        CircuitManager();
-        ~CircuitManager();
+        CircuitManager(CircuitManager const &) = delete;
+        CircuitManager &operator=(CircuitManager const &) = delete;
+        CircuitManager(CircuitManager const &&) = delete;
+        CircuitManager &operator=(CircuitManager const &&) = delete;
+
+        static CircuitManager &getInstance();
 
         int addComponent(ElementType type);
         bool removeComponent(int compIdentifier);
@@ -22,6 +26,7 @@ namespace Core::Circuit
         std::vector<Component *> getComponentsList();
 
     private:
+        CircuitManager() = default;
         std::vector<std::unique_ptr<Component>> m_components;
 
         Component *getComponentById(int componentId);
