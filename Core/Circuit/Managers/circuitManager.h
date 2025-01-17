@@ -25,6 +25,8 @@ namespace Core::Circuit
         bool addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
         void updateCircuit();
         bool removeConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
+
+        void updateInputComponentState(int compIdentifier, State state);
         std::vector<Component *> getComponentsList();
 
     private:

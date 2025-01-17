@@ -27,6 +27,7 @@ namespace UI::CircuitElements
         virtual void setVisualState(Core::Circuit::State state);
         virtual void setAudioState(Core::Circuit::State state);
         void setState(Core::Circuit::State state);
+        bool isPressable();
 
         int type() const override
         {
@@ -35,6 +36,7 @@ namespace UI::CircuitElements
 
     protected:
         ResourceManager::ResourceInfo m_resourceInfo;
+        bool m_isPressable;
 
     private:
         Core::Circuit::ElementType m_type;
@@ -45,7 +47,6 @@ namespace UI::CircuitElements
         int m_inputPortsCount;
         int m_outPutPortCount;
         int m_identifier;
-        bool m_isConnected;
 
         void addPorts();
     };

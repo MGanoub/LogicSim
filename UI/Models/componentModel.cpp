@@ -7,6 +7,7 @@ namespace UI
         return {
             Core::Circuit::ElementType::VCC,
             Core::Circuit::ElementType::GND,
+            Core::Circuit::ElementType::BUTTON,
             Core::Circuit::ElementType::LED,
             Core::Circuit::ElementType::BUZZER,
         };

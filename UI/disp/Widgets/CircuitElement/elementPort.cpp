@@ -5,7 +5,8 @@
 namespace UI::CircuitElements
 {
     ElementPort::ElementPort(ElementPort::PortType type, ElementView *parent)
-        : QGraphicsPathItem(parent), m_parent(parent), m_radius(5), m_margin(2), m_portType(type)
+        : QGraphicsPathItem(parent), m_parent(parent), m_radius(5), m_margin(2), m_portType(type),
+          m_connected(false)
     {
 
         QPainterPath p;
@@ -14,12 +15,6 @@ namespace UI::CircuitElements
 
         setPen(QPen(Qt::darkRed));
         setBrush(Qt::red);
-    }
-
-    void ElementPort::updateBrush()
-    {
-        setBrush(Qt::yellow);
-        update();
     }
 
     int ElementPort::type() const
@@ -45,15 +40,20 @@ namespace UI::CircuitElements
     {
         return m_index;
     }
-
     void ElementPort::connected()
     {
         setBrush(Qt::green);
         update();
+        m_connected = true;
     }
     void ElementPort::disconnected()
     {
+        if (!m_connected)
+        {
+            return;
+        }
         setBrush(Qt::red);
         update();
+        m_connected = false;
     }
 }

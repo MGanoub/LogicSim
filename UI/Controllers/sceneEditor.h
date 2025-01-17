@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 #include <QObject>
 #include <vector>
+#include "Core/Circuit/CircuitEnums.h"
 
 namespace Core::Circuit
 {
@@ -41,6 +42,8 @@ namespace UI
         UI::CircuitElements::ElementConnection *m_connection;
         QList<UI::CircuitElements::ElementConnection *> m_connectionsList;
         std::vector<UI::CircuitElements::ElementView *> m_circuitElements;
+        EventState m_currentEventState;
+        UI::CircuitElements::ElementView *m_pressedElement;
 
         bool handleDropEvent(QEvent *event);
         bool handleMousePressEvent(QEvent *event);
@@ -63,9 +66,9 @@ namespace UI
         bool hasConnectionStarted();
         UI::CircuitElements::ElementConnection *getConnectionInEdit();
         void resetConnectionStatus();
+        void updateElementState(UI::CircuitElements::ElementView *element, Core::Circuit::State state);
 
         void selectElementConnections(QGraphicsItem *item);
-        EventState m_currentEventState;
     };
 }
 

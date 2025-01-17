@@ -135,4 +135,15 @@ namespace Core::Circuit
         }
         return comps;
     }
+
+    void CircuitManager::updateInputComponentState(int compIdentifier, State state)
+    {
+        auto *comp = getComponentById(compIdentifier);
+        if (comp == nullptr)
+        {
+            return;
+        }
+        comp->setState(state);
+        updateCircuit();
+    }
 }

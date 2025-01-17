@@ -29,6 +29,7 @@ namespace UI
         ResourceManager() = default;
         ResourceInfo getVCCInputResource();
         ResourceInfo getGNDInputResource();
+        ResourceInfo getPressButtonResource();
         ResourceInfo getANDGateResource();
         ResourceInfo getORGateResource();
         ResourceInfo getNOTGateResource();

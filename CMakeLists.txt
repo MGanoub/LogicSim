@@ -69,6 +69,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Common/Observable.h Common/Observable.cpp
         UI/disp/Widgets/CircuitElement/OutputElements/buzzerView.h UI/disp/Widgets/CircuitElement/OutputElements/buzzerView.cpp
         Core/Circuit/Components/Output/buzzer.h Core/Circuit/Components/Output/buzzer.cpp
+        Core/Circuit/Components/Input/pressButton.h Core/Circuit/Components/Input/pressButton.cpp
+        UI/disp/Widgets/CircuitElement/InputElements/pressButtonView.h UI/disp/Widgets/CircuitElement/InputElements/pressButtonView.cpp
 
 
     )

@@ -21,7 +21,6 @@ namespace UI::CircuitElements
         };
 
         explicit ElementPort(PortType type, ElementView *parent = nullptr);
-        void updateBrush();
 
         int type() const override;
         PortType getPortType();
@@ -36,6 +35,7 @@ namespace UI::CircuitElements
         int m_margin;
         int m_index;
         PortType m_portType;
+        bool m_connected;
 
         ElementView *m_parent;
     };

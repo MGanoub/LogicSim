@@ -109,11 +109,23 @@ namespace UI
             m_currentEventState = EventState::ELEMENT_SELECTED;
             if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
             {
+                auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
+                if (element->isPressable())
+                {
+                    m_pressedElement = element;
+                    updateElementState(element, Core::Circuit::State::ON);
+                }
                 selectElementConnections(item);
             }
         }
         return true;
     }
+    void SceneEditor::updateElementState(UI::CircuitElements::ElementView *element, Core::Circuit::State state)
+    {
+        element->setVisualState(state);
+        Core::Circuit::CircuitManager::getInstance().updateInputComponentState(element->getId(), state);
+    }
+
     void SceneEditor::selectElementConnections(QGraphicsItem *item)
     {
         if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
@@ -187,6 +199,10 @@ namespace UI
             }
             addConnection(item);
             m_currentEventState = EventState::INITIAL;
+        }
+        else if (m_currentEventState == EventState::ELEMENT_SELECTED)
+        {
+            updateElementState(m_pressedElement, Core::Circuit::State::OFF);
         }
         return true;
     }

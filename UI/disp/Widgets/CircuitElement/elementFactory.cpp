@@ -1,5 +1,6 @@
 #include "elementFactory.h"
 #include "UI/disp/Widgets/CircuitElement/InputElements/gndView.h"
+#include "UI/disp/Widgets/CircuitElement/InputElements/pressButtonView.h"
 #include "UI/disp/Widgets/CircuitElement/InputElements/vccView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h"
 #include "UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h"
@@ -26,6 +27,10 @@ namespace UI
         case Core::Circuit::ElementType::GND:
         {
             return new UI::CircuitElements::GNDView(elementId, parent);
+        }
+        case Core::Circuit::ElementType::BUTTON:
+        {
+            return new UI::CircuitElements::PressButtonView(elementId, parent);
         }
         case Core::Circuit::ElementType::LED:
         {

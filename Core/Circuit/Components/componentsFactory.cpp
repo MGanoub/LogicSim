@@ -1,6 +1,7 @@
 #include "componentsFactory.h"
 #include "Core/Circuit/Components/Input/GNDInput.h"
 #include "Core/Circuit/Components/Input/VCCInput.h"
+#include "Core/Circuit/Components/Input/pressButton.h"
 #include "Core/Circuit/Components/LogicGate/andGate.h"
 #include "Core/Circuit/Components/LogicGate/notGate.h"
 #include "Core/Circuit/Components/LogicGate/orGate.h"
@@ -22,6 +23,14 @@ namespace Core::Circuit
         {
             return std::make_unique<VCCInput>();
         }
+        case ElementType::BUTTON:
+        {
+            return std::make_unique<PressButton>();
+        }
+        case ElementType::GND:
+        {
+            return std::make_unique<GNDInput>();
+        }
         case ElementType::LED:
         {
             return std::make_unique<LED>();
@@ -37,10 +46,6 @@ namespace Core::Circuit
         case ElementType::OR_GATE:
         {
             return std::make_unique<ORGate>();
-        }
-        case ElementType::GND:
-        {
-            return std::make_unique<GNDInput>();
         }
         case ElementType::NOT_GATE:
         {

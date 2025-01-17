@@ -15,8 +15,11 @@ namespace UI::CircuitElements
     }
     ElementConnection::~ElementConnection()
     {
-        m_endPort->disconnected();
-        m_startPort->disconnected();
+        if (m_endPort != nullptr)
+        {
+            m_endPort->disconnected();
+            m_startPort->disconnected();
+        }
     }
 
     void ElementConnection::setStartPort(ElementPort *port)

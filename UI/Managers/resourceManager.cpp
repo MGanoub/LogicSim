@@ -16,6 +16,14 @@ namespace UI
         {
             return getVCCInputResource();
         }
+        case Core::Circuit::ElementType::BUTTON:
+        {
+            return getPressButtonResource();
+        }
+        case Core::Circuit::ElementType::GND:
+        {
+            return getGNDInputResource();
+        }
         case Core::Circuit::ElementType::LED:
         {
             return getLEDResource();
@@ -32,10 +40,7 @@ namespace UI
         {
             return getORGateResource();
         }
-        case Core::Circuit::ElementType::GND:
-        {
-            return getGNDInputResource();
-        }
+
         case Core::Circuit::ElementType::NOT_GATE:
         {
             return getNOTGateResource();
@@ -62,6 +67,15 @@ namespace UI
             QString("GND"),
             QString(":/inputs/GND.png"),
             QString(":/inputs/GND.png"),
+            QString()};
+    }
+
+    ResourceManager::ResourceInfo ResourceManager::getPressButtonResource()
+    {
+        return {
+            QString("Press Button"),
+            QString(":/inputs/buttonOn.png"),
+            QString(":/inputs/buttonOff.png"),
             QString()};
     }
 

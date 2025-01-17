@@ -14,7 +14,8 @@ namespace UI::CircuitElements
           m_pixmapWidth(64),
           m_pixmapHeight(64),
           m_maxPortsToDisplayOnOneSide(6),
-          m_resourceInfo(ResourceManager::getInstance().getResourceInformationOf(type))
+          m_resourceInfo(ResourceManager::getInstance().getResourceInformationOf(type)),
+          m_isPressable(false)
     {
         setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         addPorts();
@@ -95,5 +96,10 @@ namespace UI::CircuitElements
     {
         setVisualState(state);
         setAudioState(state);
+    }
+
+    bool ElementView::isPressable()
+    {
+        return m_isPressable;
     }
 }
