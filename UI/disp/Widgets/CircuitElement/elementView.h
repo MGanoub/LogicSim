@@ -13,7 +13,7 @@ namespace UI::CircuitElements
     public:
         enum
         {
-            Type = QGraphicsItem::UserType + 2
+            GraphicalType = QGraphicsItem::UserType + 2
         };
 
         explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, int outPutPortCount, int identifier, QGraphicsItem *parent = nullptr);
@@ -28,7 +28,7 @@ namespace UI::CircuitElements
 
         int type() const override
         {
-            return Type;
+            return GraphicalType;
         }
 
     protected:

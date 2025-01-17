@@ -64,6 +64,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h UI/disp/Widgets/CircuitElement/LogicGates/notGateView.cpp
         UI/Managers/resourceManager.h UI/Managers/resourceManager.cpp
         UI/Models/componentModel.h UI/Models/componentModel.cpp
+        Common/IObserver.h
+        Common/IObservable.h
+        Common/Observable.h Common/Observable.cpp
 
 
     )

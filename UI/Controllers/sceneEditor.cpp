@@ -17,7 +17,8 @@ namespace UI
 
     SceneEditor::SceneEditor(QGraphicsView *graphicsViewWidget, QObject *parent)
         : QObject(parent),
-          m_graphicsView(graphicsViewWidget)
+          m_graphicsView(graphicsViewWidget),
+          m_currentEventState(EventState::INITIAL)
     {
         m_scene = new CustomWidgets::sceneWidget(this);
         m_scene->setBackgroundBrush(QColor("#ffffe6"));
@@ -26,6 +27,7 @@ namespace UI
         {
             m_graphicsView->setScene(m_scene);
         }
+        Core::Circuit::CircuitManager::getInstance().addListenser(this);
     }
 
     bool SceneEditor::eventFilter(QObject *obj, QEvent *evt)
@@ -72,6 +74,16 @@ namespace UI
         return QObject::eventFilter(obj, evt);
     }
 
+    void SceneEditor::startConnection(QGraphicsItem *item)
+    {
+        auto *connection = new UI::CircuitElements::ElementConnection();
+        setConnectionInEdit(connection);
+
+        auto *port = static_cast<UI::CircuitElements::ElementPort *>(item);
+        connection->setStartPort(port);
+        m_scene->addItem(connection);
+    }
+
     bool SceneEditor::handleMousePressEvent(QEvent *event)
     {
         auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
@@ -80,54 +92,51 @@ namespace UI
         if (item == nullptr)
         {
             m_scene->clearSelection();
-            m_isItemSelected = false;
+            m_currentEventState = EventState::INITIAL;
             return true;
         }
-        if (isItemAnElementPort(item) && !hasConnectionStarted())
+        if (isItemAnElementPort(item))
         {
             m_scene->clearSelection();
-            m_isItemSelected = false;
-            auto *connection = new UI::CircuitElements::ElementConnection();
-            setConnectionInEdit(connection);
-
-            auto *port = static_cast<UI::CircuitElements::ElementPort *>(item);
-            port->updateBrush();
-            connection->setStartPort(port);
-            m_scene->addItem(connection);
+            m_currentEventState = EventState::CONNECTION_STARTED;
+            startConnection(item);
         }
-        if (item->type() == UI::CircuitElements::ElementView::Type || item->type() == UI::CircuitElements::ElementConnection::Type)
+        if (item->type() == UI::CircuitElements::ElementView::GraphicalType ||
+            item->type() == UI::CircuitElements::ElementConnection::GraphicalType)
         {
             m_scene->clearSelection();
             item->setSelected(true);
-
-            if (item->type() == UI::CircuitElements::ElementView::Type)
+            m_currentEventState = EventState::ELEMENT_SELECTED;
+            if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
             {
-                auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
-                for (auto *connection : m_connectionsList)
-                {
-                    if (connection->isConnectedWith(element->getId()))
-                    {
-                        connection->setSelected(true);
-                    }
-                }
+                selectElementConnections(item);
             }
-            m_isItemSelected = true;
         }
         return true;
     }
-
-    bool SceneEditor::hasConnectionStarted()
+    void SceneEditor::selectElementConnections(QGraphicsItem *item)
     {
-        return m_isWireConnectionInProgress;
+        if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
+        {
+            auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
+            for (auto *connection : m_connectionsList)
+            {
+                if (connection->isConnectedWith(element->getId()))
+                {
+                    connection->setSelected(true);
+                }
+            }
+        }
     }
+
     UI::CircuitElements::ElementConnection *SceneEditor::getConnectionInEdit()
     {
         return m_connection;
     }
+
     void SceneEditor::setConnectionInEdit(UI::CircuitElements::ElementConnection *connection)
     {
         m_connection = connection;
-        m_isWireConnectionInProgress = true;
     }
 
     bool SceneEditor::handleMouseMovementEvent(QEvent *event)
@@ -135,19 +144,18 @@ namespace UI
         auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
         auto mousePos = mouseEvt->scenePos();
 
-        if (hasConnectionStarted())
+        if (m_currentEventState == EventState::CONNECTION_STARTED)
         {
             auto *connection = getConnectionInEdit();
             connection->setEndPos(mousePos);
             connection->updatePath();
-            connection->update();
         }
-        if (m_isItemSelected)
+        else if (m_currentEventState == EventState::ELEMENT_SELECTED)
         {
             bool isElementSelected = false;
             for (auto *item : m_scene->selectedItems())
             {
-                if (item->type() == UI::CircuitElements::ElementView::Type)
+                if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
                 {
                     isElementSelected = true;
                     item->setPos(mousePos);
@@ -158,18 +166,18 @@ namespace UI
                 for (auto *connection : m_connectionsList)
                 {
                     connection->updatePath();
-                    connection->update();
                 }
             }
         }
         return true;
     }
+
     bool SceneEditor::handleMouseReleaseEvent(QEvent *event)
     {
         auto *mouseEvt = dynamic_cast<QGraphicsSceneMouseEvent *>(event);
         auto mousePos = mouseEvt->scenePos();
 
-        if (hasConnectionStarted())
+        if (m_currentEventState == EventState::CONNECTION_STARTED)
         {
             auto *item = getSceneItemAtPos(mousePos);
             if (item->type() != UI::CircuitElements::ElementPort::GraphicalType)
@@ -177,27 +185,32 @@ namespace UI
                 removeConnectionInEdit();
                 return true;
             }
-            auto *connection = getConnectionInEdit();
-            auto *outputPort = connection->getStartPort();
-            auto *inputPort = static_cast<UI::CircuitElements::ElementPort *>(item);
-            auto *outputComp = outputPort->getParent();
-            auto *inputComp = inputPort->getParent();
-            const auto isConnectionMade = Core::Circuit::CircuitManager::getInstance().addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
-
-            if (!isConnectionMade)
-            {
-                removeConnectionInEdit();
-                return true;
-            }
-            connection->makeConnection(inputPort);
-            m_connectionsList.append(connection);
-            resetConnectionStatus();
-            updateElementsInScene();
+            addConnection(item);
+            m_currentEventState = EventState::INITIAL;
         }
         return true;
     }
 
-    void SceneEditor::updateElementsInScene()
+    void SceneEditor::addConnection(QGraphicsItem *item)
+    {
+        auto *connection = getConnectionInEdit();
+        auto *outputPort = connection->getStartPort();
+        auto *inputPort = static_cast<UI::CircuitElements::ElementPort *>(item);
+        auto *outputComp = outputPort->getParent();
+        auto *inputComp = inputPort->getParent();
+        const auto isConnectionMade = Core::Circuit::CircuitManager::getInstance().addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
+
+        if (!isConnectionMade)
+        {
+            removeConnectionInEdit();
+            return;
+        }
+        connection->makeConnection(inputPort);
+        m_connectionsList.append(connection);
+        m_connection = nullptr;
+    }
+
+    void SceneEditor::circuitChanged()
     {
         const auto componentsList = Core::Circuit::CircuitManager::getInstance().getComponentsList();
         for (auto &component : componentsList)
@@ -215,13 +228,11 @@ namespace UI
     void SceneEditor::resetConnectionStatus()
     {
         m_connection = nullptr;
-        m_isWireConnectionInProgress = false;
     }
     void SceneEditor::removeConnectionInEdit()
     {
         auto *connection = getConnectionInEdit();
         m_scene->removeItem(connection);
-        m_isWireConnectionInProgress = false;
         delete connection;
     }
 
@@ -229,11 +240,11 @@ namespace UI
     {
 
         auto *keyPressedEvent = dynamic_cast<QKeyEvent *>(event);
-        if (keyPressedEvent->key() == Qt::Key_Delete && m_isItemSelected)
+        if (keyPressedEvent->key() == Qt::Key_Delete && m_currentEventState == EventState::ELEMENT_SELECTED)
         {
             for (auto *item : m_scene->selectedItems())
             {
-                if (item->type() == UI::CircuitElements::ElementConnection::Type)
+                if (item->type() == UI::CircuitElements::ElementConnection::GraphicalType)
                 {
                     auto *connection = static_cast<UI::CircuitElements::ElementConnection *>(item);
                     removeConnection(connection);
@@ -241,14 +252,14 @@ namespace UI
             }
             for (auto *item : m_scene->selectedItems())
             {
-                if (item->type() == UI::CircuitElements::ElementView::Type)
+                if (item->type() == UI::CircuitElements::ElementView::GraphicalType)
                 {
                     auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
                     removeElement(element);
                 }
             }
-            updateElementsInScene();
         }
+        m_currentEventState = EventState::INITIAL;
         return true;
     }
     void SceneEditor::removeConnection(UI::CircuitElements::ElementConnection *connection)
@@ -290,21 +301,27 @@ namespace UI
         QPointF offset;
         int type;
         dataStream >> offset >> type;
-        QPointF pos = dragDropevent->scenePos() - offset;
+        QPointF dragPos = dragDropevent->scenePos() - offset;
         event->accept();
+        addElement(type, dragPos);
+        return true;
+    }
 
+    void SceneEditor::addElement(int type, QPointF dragPos)
+    {
         const auto elementType = static_cast<Core::Circuit::ElementType>(type);
         auto elementId = Core::Circuit::CircuitManager::getInstance().addComponent(elementType);
         if (!elementId)
         {
-            return false;
+            return;
         }
-
         auto *elementView = UI::ElementFactory::getInstance().createElement(elementType, elementId);
-        elementView->setPos(pos);
+        elementView->setPos(dragPos);
+        m_scene->clearSelection();
+        elementView->setSelected(true);
+        m_currentEventState = EventState::ELEMENT_SELECTED;
         m_scene->addItem(elementView);
         m_circuitElements.push_back(elementView);
-        return true;
     }
 
     QGraphicsItem *SceneEditor::getSceneItemAtPos(const QPointF PosPoint)

@@ -57,6 +57,7 @@ namespace UI::CircuitElements
         p.cubicTo(point1, point2, m_endPos);
 
         setPath(p);
+        update();
     }
 
     void ElementConnection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

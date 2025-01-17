@@ -98,12 +98,32 @@ namespace Core::Circuit
 
     void CircuitManager::updateCircuit()
     {
+        bool shouldNotifyListensers = false;
+        bool hasCircuitStateChanged = false;
+        bool hasCircuitBeenChecked = false;
         for (auto &comp : m_components)
         {
+            if (hasCircuitBeenChecked && !hasCircuitStateChanged)
+            {
+                break;
+            }
+            hasCircuitStateChanged = false;
             for (auto &comp : m_components)
             {
+                auto stateBeforeCompute = comp->getState();
                 comp->computeOutputState();
+                auto stateAfterCompute = comp->getState();
+                if (stateBeforeCompute != stateAfterCompute)
+                {
+                    hasCircuitStateChanged = true;
+                    shouldNotifyListensers = true;
+                }
+                hasCircuitBeenChecked = true;
             }
+        }
+        if (shouldNotifyListensers)
+        {
+            notifyListeners();
         }
     }
     std::vector<Component *> CircuitManager::getComponentsList()

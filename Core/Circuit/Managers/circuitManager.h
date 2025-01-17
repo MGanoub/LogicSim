@@ -6,9 +6,11 @@
 #include <memory>
 #include <vector>
 
+#include "Common/Observable.h"
+
 namespace Core::Circuit
 {
-    class CircuitManager
+    class CircuitManager : public Common::Observable
     {
     public:
         CircuitManager(CircuitManager const &) = delete;

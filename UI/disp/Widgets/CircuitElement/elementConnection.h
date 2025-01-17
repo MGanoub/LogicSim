@@ -11,7 +11,7 @@ namespace UI::CircuitElements
     public:
         enum
         {
-            Type = QGraphicsItem::UserType + 3
+            GraphicalType = QGraphicsItem::UserType + 3
         };
 
         explicit ElementConnection(QGraphicsItem *parent = nullptr);
@@ -31,7 +31,7 @@ namespace UI::CircuitElements
 
         int type() const override
         {
-            return Type;
+            return GraphicalType;
         }
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
