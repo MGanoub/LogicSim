@@ -63,6 +63,28 @@ namespace Core::Circuit
         return true;
     }
 
+    bool CircuitManager::removeConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
+    {
+        auto *firstComp = getComponentById(firstCompIdent);
+        auto *secondComp = getComponentById(secondCompIdent);
+
+        if ((firstComp == nullptr) || (secondComp == nullptr))
+        {
+            return false;
+        }
+        auto *firstPort = firstComp->getPortAtIndex(firstCompPortNumber);
+        auto *secondPort = secondComp->getPortAtIndex(secondCompPortNumber);
+
+        if (!firstPort->isConnected() || !secondPort->isConnected())
+        {
+            return false;
+        }
+        firstPort->disconnect();
+        secondPort->disconnect();
+        updateCircuit();
+        return true;
+    }
+
     void CircuitManager::updateCircuit()
     {
         for (auto &comp : m_components)
@@ -73,9 +95,9 @@ namespace Core::Circuit
             }
         }
     }
-    std::vector<Component*> CircuitManager::getComponentsList()
+    std::vector<Component *> CircuitManager::getComponentsList()
     {
-        std::vector<Component*> comps;
+        std::vector<Component *> comps;
         for (auto &comp : m_components)
         {
             comps.push_back(comp.get());

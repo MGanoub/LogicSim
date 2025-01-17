@@ -15,6 +15,7 @@ namespace UI::CircuitElements
           m_pixmapHeight(64),
           m_maxPortsToDisplayOnOneSide(6)
     {
+        setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         addPorts();
     }
 
@@ -36,14 +37,16 @@ namespace UI::CircuitElements
     {
         Q_UNUSED(widget)
         painter->setClipRect(option->exposedRect);
-        /*
         if (isSelected())
         {
-            painter->setBrush(m_selectionBrush);
-            painter->setPen(QPen(m_selectionPen, 0.5, Qt::SolidLine));
+
+            const auto selectionBrush = QColor(175, 0, 0, 80);
+            const auto selectionPen = QColor(175, 0, 0, 255);
+            painter->setBrush(selectionBrush);
+            painter->setPen(QPen(selectionPen, 0.5, Qt::SolidLine));
             painter->drawRoundedRect(boundingRect(), 5, 5);
         }
-        */
+
         painter->drawPixmap(QPoint(0, 0), *m_pixmap);
     }
 
@@ -74,20 +77,11 @@ namespace UI::CircuitElements
                 auto *port = new ElementPort(ElementPort::PortType::OUTPUTPORT, this);
                 // output port starting index is after the last index of  input port
                 port->setIndex(i + m_inputPortsCount);
-                port->setPos(64, 32);
+                port->setPos(m_pixmapWidth, m_pixmapHeight / 2);
                 port->update();
                 port->show();
             }
         }
-    }
-
-    void ElementView::updatePortsPosition()
-    {
-
-        int step = qMax(32 / m_inputPortsCount, 6);
-        // int x = 32 - m_inputs.size() * step + step;
-        // port->setPos(32, 0);
-        // port->update();
     }
 
     void ElementView::setVisualState(Core::Circuit::State state)

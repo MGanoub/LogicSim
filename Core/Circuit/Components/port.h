@@ -35,6 +35,7 @@ namespace Core::Circuit
         IComponent *getParentComp();
         bool isOutputType();
         bool isInputType();
+        void disconnect();
 
     private:
         State m_state;

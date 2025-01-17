@@ -9,13 +9,12 @@ namespace UI::CircuitElements
     class ElementView : public QGraphicsObject
     {
         Q_OBJECT
-
+    public:
         enum
         {
             Type = QGraphicsItem::UserType + 2
         };
 
-    public:
         explicit ElementView(Core::Circuit::ElementType type, int inputPortCount, int outPutPortCount, int identifier, QGraphicsItem *parent = nullptr);
 
         QRectF boundingRect() const override;
@@ -40,9 +39,9 @@ namespace UI::CircuitElements
         int m_inputPortsCount;
         int m_outPutPortCount;
         int m_identifier;
+        bool m_isConnected;
 
         void addPorts();
-        void updatePortsPosition();
     };
 }
 #endif // ELEMENTVIEW_H

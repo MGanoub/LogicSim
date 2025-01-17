@@ -40,6 +40,8 @@ namespace UI
         bool handleMouseMovementEvent(QEvent *event);
         bool handleMouseReleaseEvent(QEvent *event);
 
+        bool handleKeyPressed(QEvent *event);
+
         QGraphicsItem *getSceneItemAtPos(const QPointF PosPoint);
         bool isItemAnElementPort(QGraphicsItem *item);
 
@@ -50,6 +52,8 @@ namespace UI
         void resetConnectionStatus();
 
         void updateElementsInScene();
+
+        bool m_isItemSelected = false;
     };
 }
 

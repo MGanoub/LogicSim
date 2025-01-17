@@ -25,5 +25,6 @@ namespace UI::CircuitElements
         default:
             break;
         }
+        update();
     }
 }

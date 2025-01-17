@@ -9,6 +9,7 @@ namespace UI::CircuitElements
     ElementConnection::ElementConnection(QGraphicsItem *parent)
         : QGraphicsPathItem(parent), m_startPort(nullptr), m_endPort(nullptr)
     {
+        setFlags(QGraphicsItem::ItemIsSelectable);
         setPen(QPen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         setZValue(-1);
     }
@@ -41,7 +42,11 @@ namespace UI::CircuitElements
     void ElementConnection::updatePath()
     {
         QPainterPath p;
-
+        m_startPos = m_startPort->scenePos();
+        if (m_endPort)
+        {
+            m_endPos = m_endPort->scenePos();
+        }
         p.moveTo(m_startPos);
 
         qreal dx = m_endPos.x() - m_startPos.x();
@@ -61,7 +66,8 @@ namespace UI::CircuitElements
 
         if (isSelected())
         {
-            painter->setPen(QPen(Qt::green, 5));
+            const auto selectionColor = QColor(175, 0, 0, 255);
+            painter->setPen(QPen(selectionColor, 5));
         }
         else
         {
@@ -78,8 +84,6 @@ namespace UI::CircuitElements
             return;
         }
         setEndPort(connectionItem);
-        connectionItem->setBrush(Qt::green);
-        connectionItem->update();
     }
 
 }

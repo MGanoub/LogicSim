@@ -42,6 +42,16 @@ namespace Core::Circuit
         m_otherConnectedPort = otherPort;
         m_isConnected = true;
     }
+    void Port::disconnect()
+    {
+        if (!m_isConnected)
+        {
+            return;
+        }
+        m_otherConnectedPort = nullptr;
+        m_isConnected = false;
+        m_state= State::OFF;
+    }
 
     bool Port::isConnected()
     {

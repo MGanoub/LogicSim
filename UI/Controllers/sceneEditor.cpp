@@ -1,6 +1,6 @@
 #include "sceneEditor.h"
-#include "Core/Circuit/Managers/circuitManager.h"
 #include "Core/Circuit/Components/component.h"
+#include "Core/Circuit/Managers/circuitManager.h"
 #include "UI/disp/Widgets/CircuitElement/elementConnection.h"
 #include "UI/disp/Widgets/CircuitElement/elementFactory.h"
 #include "UI/disp/Widgets/CircuitElement/elementPort.h"
@@ -9,6 +9,7 @@
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QIODevice>
+#include <QKeyEvent>
 #include <QMimeData>
 
 namespace UI
@@ -58,7 +59,10 @@ namespace UI
             return handleDropEvent(evt);
             break;
         }
-
+        case QEvent::KeyPress:
+        {
+            handleKeyPressed(evt);
+        }
         case QEvent::GraphicsSceneDragMove:
         case QEvent::GraphicsSceneDragEnter:
         {
@@ -77,10 +81,14 @@ namespace UI
         QGraphicsItem *item = getSceneItemAtPos(mousePos);
         if (item == nullptr)
         {
+            m_scene->clearSelection();
+            m_isItemSelected = false;
             return true;
         }
         if (isItemAnElementPort(item) && !hasConnectionStarted())
         {
+            m_scene->clearSelection();
+            m_isItemSelected = false;
             auto *connection = new UI::CircuitElements::ElementConnection();
             setConnectionInEdit(connection);
 
@@ -88,6 +96,12 @@ namespace UI
             port->updateBrush();
             connection->setStartPort(port);
             m_scene->addItem(connection);
+        }
+        if (item->type() == UI::CircuitElements::ElementView::Type || item->type() == UI::CircuitElements::ElementConnection::Type)
+        {
+            m_scene->clearSelection();
+            item->setSelected(true);
+            m_isItemSelected = true;
         }
         return true;
     }
@@ -117,6 +131,19 @@ namespace UI
             connection->setEndPos(mousePos);
             connection->updatePath();
             connection->update();
+        }
+        if (m_isItemSelected)
+        {
+            auto item = m_scene->selectedItems().first();
+            if (item->type() == UI::CircuitElements::ElementView::Type)
+            {
+                item->setPos(mousePos);
+            }
+            for (auto *connection : m_connectionsList)
+            {
+                connection->updatePath();
+                connection->update();
+            }
         }
         return true;
     }
@@ -148,8 +175,6 @@ namespace UI
             connection->makeConnection(inputPort);
             m_connectionsList.append(connection);
             resetConnectionStatus();
-
-            m_circuitManager->updateCircuit();
             updateElementsInScene();
         }
         return true;
@@ -165,6 +190,7 @@ namespace UI
             if (elementItr != m_circuitElements.end())
             {
                 (*elementItr)->setVisualState(component->getState());
+                (*elementItr)->update();
             }
         }
     }
@@ -181,6 +207,35 @@ namespace UI
         m_isWireConnectionInProgress = false;
         delete connection;
     }
+
+    bool SceneEditor::handleKeyPressed(QEvent *event)
+    {
+
+        auto *keyPressedEvent = dynamic_cast<QKeyEvent *>(event);
+        if (keyPressedEvent->key() == Qt::Key_Delete && m_isItemSelected)
+        {
+            auto *item = m_scene->selectedItems().first();
+            if (item->type() == UI::CircuitElements::ElementConnection::Type)
+            {
+                auto *connection = static_cast<UI::CircuitElements::ElementConnection *>(item);
+                auto *startPort = connection->getStartPort();
+                auto *endPort = connection->getEndPort();
+                const auto firstPortParent = startPort->getParent();
+                const auto secondPortParent = endPort->getParent();
+                bool isConnectionRemoved = m_circuitManager->removeConnection(firstPortParent->getId(), startPort->getIndex(), secondPortParent->getId(), endPort->getIndex());
+                if (isConnectionRemoved)
+                {
+                    m_scene->removeItem(connection);
+                    m_connectionsList.removeOne(connection);
+                    delete connection;
+                    updateElementsInScene();
+                }
+            }
+            return true;
+        }
+        return true;
+    }
+
     bool SceneEditor::handleDropEvent(QEvent *event)
     {
         auto *dragDropevent = dynamic_cast<QGraphicsSceneDragDropEvent *>(event);

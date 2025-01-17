@@ -8,22 +8,23 @@
 
 namespace Core::Circuit
 {
-class CircuitManager
-{
-public:
-    CircuitManager();
-    ~CircuitManager();
+    class CircuitManager
+    {
+    public:
+        CircuitManager();
+        ~CircuitManager();
 
-    int addComponent(ElementType type);
-    bool addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
-    void updateCircuit();
-    std::vector<Component*> getComponentsList();
+        int addComponent(ElementType type);
+        bool addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
+        void updateCircuit();
+        bool removeConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
+        std::vector<Component *> getComponentsList();
 
-private:
-    std::vector<std::unique_ptr<Component>> m_components;
+    private:
+        std::vector<std::unique_ptr<Component>> m_components;
 
-    Component *getComponentById(int componentId);
-};
+        Component *getComponentById(int componentId);
+    };
 }
 
 #endif // CIRCUITMANAGER_H
