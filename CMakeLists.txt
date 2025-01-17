@@ -33,16 +33,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/Controllers/sceneEditor.h  UI/Controllers/sceneEditor.cpp
         UI/disp/Widgets/draggableLabel.h UI/disp/Widgets/draggableLabel.cpp
         UI/disp/Widgets/CircuitElement/elementView.h UI/disp/Widgets/CircuitElement/elementView.cpp
-        Core/Circuit/elementTypeEnum.h
+        Core/Circuit/CircuitEnums.h
         UI/disp/Widgets/CircuitElement/elementPort.h UI/disp/Widgets/CircuitElement/elementPort.cpp
         UI/disp/Widgets/CircuitElement/elementConnection.h UI/disp/Widgets/CircuitElement/elementConnection.cpp
         Core/Circuit/Components/IComponent.h
         Core/Circuit/Components/Input/VCCInput.h Core/Circuit/Components/Input/VCCInput.cpp
         Core/Circuit/Components/port.h Core/Circuit/Components/port.cpp
         Core/Circuit/Managers/circuitManager.h Core/Circuit/Managers/circuitManager.cpp
-        Core/Circuit/Components/Input/inputComponent.h Core/Circuit/Components/Input/inputComponent.cpp
+
         Core/Circuit/Components/component.h Core/Circuit/Components/component.cpp
-        Core/Circuit/Components/Output/outputComponent.h Core/Circuit/Components/Output/outputComponent.cpp
+
         Core/Circuit/Components/Output/led.h Core/Circuit/Components/Output/led.cpp
         UI/disp/Widgets/CircuitElement/OutputElements/ledView.h UI/disp/Widgets/CircuitElement/OutputElements/ledView.cpp
         logicSimApp.h logicSimApp.cpp
@@ -54,7 +54,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         UI/disp/Widgets/CircuitElement/elementFactory.h UI/disp/Widgets/CircuitElement/elementFactory.cpp
         UI/disp/Widgets/CircuitElement/InputElements/vccView.h UI/disp/Widgets/CircuitElement/InputElements/vccView.cpp
         UI/disp/Widgets/CircuitElement/LogicGates/andGateView.h UI/disp/Widgets/CircuitElement/LogicGates/andGateView.cpp
-        Core/Circuit/Components/LogicGate/gate.h Core/Circuit/Components/LogicGate/gate.cpp
+
         Core/Circuit/Components/LogicGate/andGate.h Core/Circuit/Components/LogicGate/andGate.cpp
         Core/Circuit/Components/LogicGate/orGate.h Core/Circuit/Components/LogicGate/orGate.cpp
         UI/disp/Widgets/CircuitElement/LogicGates/orGateView.h UI/disp/Widgets/CircuitElement/LogicGates/orGateView.cpp

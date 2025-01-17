@@ -56,4 +56,13 @@ namespace Core::Circuit
         }
         m_state = m_otherConnectedPort->getState();
     }
+
+    bool Port::isOutputType()
+    {
+        return m_portType == Port::Type::OUTPUT;
+    }
+    bool Port::isInputType()
+    {
+        return m_portType == Port::Type::INPUT;
+    }
 }

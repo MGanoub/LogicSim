@@ -64,18 +64,18 @@ namespace UI::CircuitElements
                 int posY = (0.5 * dt) + (i * dt);
                 port->setPos(0, posY);
                 port->update();
-                // updatePorts();
                 port->show();
             }
         }
+
         for (int i = 0; i < m_outPutPortCount; i++)
         {
             {
                 auto *port = new ElementPort(ElementPort::PortType::OUTPUTPORT, this);
-                port->setIndex(i);
+                // output port starting index is after the last index of  input port
+                port->setIndex(i + m_inputPortsCount);
                 port->setPos(64, 32);
                 port->update();
-                // updatePorts();
                 port->show();
             }
         }

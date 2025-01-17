@@ -1,29 +1,29 @@
 #ifndef CIRCUITMANAGER_H
 #define CIRCUITMANAGER_H
 
+#include "Core/Circuit/CircuitEnums.h"
 #include "Core/Circuit/Components/component.h"
-#include "Core/Circuit/elementTypeEnum.h"
 #include <memory>
 #include <vector>
-#include "Core/Circuit/Components/Output/outputComponent.h"
 
 namespace Core::Circuit
 {
-    class CircuitManager
-    {
-    public:
-        CircuitManager();
-        ~CircuitManager();
+class CircuitManager
+{
+public:
+    CircuitManager();
+    ~CircuitManager();
 
-        int addComponent(ElementType type);
-        bool addConnection(int firstCompIdent, int secondCompIdent, int secondCompPortNumber);
-        void update();
-        std::vector<Component *> getComponentsList();
-        std::vector<OutputComponent *> getOutputComponentsList();
+    int addComponent(ElementType type);
+    bool addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
+    void updateCircuit();
+    std::vector<Component*> getComponentsList();
 
-    private:
-        std::vector<Component *> m_components;
-    };
+private:
+    std::vector<std::unique_ptr<Component>> m_components;
+
+    Component *getComponentById(int componentId);
+};
 }
 
 #endif // CIRCUITMANAGER_H

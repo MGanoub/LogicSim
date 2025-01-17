@@ -1,11 +1,11 @@
 #ifndef ANDGATE_H
 #define ANDGATE_H
 
-#include "gate.h"
+#include "Core/Circuit/Components/component.h"
 
 namespace Core::Circuit
 {
-    class ANDGate : public LogicGate
+    class ANDGate : public Component
     {
     public:
         ANDGate();

@@ -1,11 +1,11 @@
 #ifndef ORGATE_H
 #define ORGATE_H
 
-#include "gate.h"
+#include "Core/Circuit/Components/component.h"
 
 namespace Core::Circuit
 {
-    class ORGate : public LogicGate
+    class ORGate : public Component
     {
     public:
         ORGate();

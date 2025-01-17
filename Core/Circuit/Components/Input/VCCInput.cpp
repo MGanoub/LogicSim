@@ -3,7 +3,8 @@
 namespace Core::Circuit
 {
     VCCInput::VCCInput()
-        : InputComponent(Port(this, Port::Type::OUTPUT, 0, State::ON))
+        : Component(0, 1)
     {
+        setState(State::ON);
     }
 }

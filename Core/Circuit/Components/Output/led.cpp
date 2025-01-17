@@ -3,14 +3,16 @@
 namespace Core::Circuit
 {
     LED::LED()
-        : OutputComponent(1)
+        : Component(1, 0)
     {
     }
 
     void LED::computeOutputState()
     {
-        auto firstPort = m_ports.front();
-        firstPort.updateState();
-        m_outState = firstPort.getState();
+        for (auto &port : m_portsList)
+        {
+            port.updateState();
+            m_state = port.getState();
+        }
     }
 }

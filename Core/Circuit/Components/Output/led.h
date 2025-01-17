@@ -1,11 +1,11 @@
 #ifndef LED_H
 #define LED_H
 
-#include "Core/Circuit/Components/Output/outputComponent.h"
+#include "Core/Circuit/Components/component.h"
 
 namespace Core::Circuit
 {
-    class LED : public OutputComponent
+    class LED : public Component
     {
     public:
         LED();

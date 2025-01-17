@@ -12,34 +12,34 @@ namespace Core::Circuit
         static ComponentsFactory s_instance;
         return s_instance;
     }
-    Component *ComponentsFactory::createComponent(ElementType type)
+    std::unique_ptr<Component> ComponentsFactory::createComponent(ElementType type)
     {
         switch (type)
         {
         case ElementType::VCC:
         {
-            return new VCCInput();
+            return std::make_unique<VCCInput>();
         }
         case ElementType::LED:
         {
-            return new LED();
+            return std::make_unique<LED>();
         }
         case ElementType::AND_GATE:
         {
-            return new ANDGate();
+            return std::make_unique<ANDGate>();
         }
         case ElementType::OR_GATE:
         {
-            return new ORGate();
+            return std::make_unique<ORGate>();
         }
         case ElementType::GND:
         {
-            return new GNDInput();
+            return std::make_unique<GNDInput>();
         }
         case ElementType::UNKNOWN:
         default:
             break;
         }
-        return new Component();
+        return std::make_unique<Component>(0, 0);
     }
 }

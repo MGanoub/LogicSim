@@ -1,7 +1,7 @@
 #ifndef ELEMENTFACTORY_H
 #define ELEMENTFACTORY_H
 
-#include "Core/Circuit/elementTypeEnum.h"
+#include "Core/Circuit/CircuitEnums.h"
 #include "UI/disp/Widgets/CircuitElement/elementView.h"
 
 namespace UI

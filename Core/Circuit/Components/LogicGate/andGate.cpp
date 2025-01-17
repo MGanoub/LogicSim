@@ -3,23 +3,25 @@
 namespace Core::Circuit
 {
     ANDGate::ANDGate()
-        : LogicGate(2)
+        : Component(2, 1)
     {
     }
     void ANDGate::computeOutputState()
     {
         if (!areAllInputPortsConnected())
         {
-            setOutputState(State::OFF);
+            setState(State::OFF);
             return;
         }
         updateInputPortsState();
         bool outputState = true;
-        for (auto input : m_inputPorts)
+        for (auto port : m_portsList)
         {
-            outputState &= static_cast<bool>(input.getState());
+            if (port.isInputType())
+            {
+                outputState &= static_cast<bool>(port.getState());
+            }
         }
-        m_outState = (outputState) ? State::ON : State::OFF;
-        m_outputPort.setState(m_outState);
+        setState(static_cast<State>(outputState));
     }
 }

@@ -1,9 +1,6 @@
 
 #include "Core/Circuit/Managers/circuitManager.h"
 #include "Core/Circuit/Components/componentsFactory.h"
-#include <Core/Circuit/Components/Input/inputComponent.h>
-#include <Core/Circuit/Components/LogicGate/gate.h>
-#include <Core/Circuit/Components/Output/outputComponent.h>
 #include <algorithm>
 
 namespace Core::Circuit
@@ -14,127 +11,75 @@ namespace Core::Circuit
 
     CircuitManager::~CircuitManager()
     {
-        for (auto *comp : m_components)
-        {
-            delete comp;
-        }
     }
 
     int CircuitManager::addComponent(ElementType type)
     {
-        int identifier = 0;
-        auto *comp = ComponentsFactory::getInstance().createComponent(type);
-        if (comp->getType() == Component::Type::UNDEFINED)
+        if (type == ElementType::UNKNOWN)
         {
-            delete comp;
-            return identifier;
+            int unknownIdentifier = 0;
+            return unknownIdentifier;
         }
-        identifier = comp->getIndentifier();
-        m_components.push_back(comp);
-        return identifier;
+        auto comp = ComponentsFactory::getInstance().createComponent(type);
+        const auto compIdentifier = comp->getIndentifier();
+        m_components.push_back(std::move(comp));
+        return compIdentifier;
     }
 
-    bool CircuitManager::addConnection(int firstCompIdent, int secondCompIdent, int secondCompPortNumber)
+    Component *CircuitManager::getComponentById(int componentId)
     {
-        auto firstComp = std::find_if(m_components.begin(), m_components.end(), [&](Component *comp)
-                                      { return (comp->getIndentifier() == firstCompIdent); });
-        auto secondComp = std::find_if(m_components.begin(), m_components.end(), [&](Component *comp)
-                                       { return comp->getIndentifier() == secondCompIdent; });
-        if ((firstComp == m_components.end()) || (secondComp == m_components.end()))
+
+        for (auto &comp : m_components)
+        {
+            if (comp->getIndentifier() == componentId)
+            {
+                return comp.get();
+            }
+        }
+        return nullptr;
+    }
+
+    bool CircuitManager::addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
+    {
+        auto *firstComp = getComponentById(firstCompIdent);
+        auto *secondComp = getComponentById(secondCompIdent);
+
+        if ((firstComp == nullptr) || (secondComp == nullptr))
         {
             return false;
         }
-        Port *outputPort, *inputPort;
-        if ((*firstComp)->getType() == Component::Type::INPUT)
-        {
-            auto *inputComp = static_cast<InputComponent *>(*firstComp);
-            outputPort = inputComp->getOutputPort();
-        }
-        if ((*firstComp)->getType() == Component::Type::LOGIC_GATE)
-        {
-            auto *inputComp = static_cast<LogicGate *>(*firstComp);
-            outputPort = inputComp->getOutputPort();
-        }
-        if ((*secondComp)->getType() == Component::Type::LOGIC_GATE)
-        {
-            auto *outputComp = static_cast<LogicGate *>(*secondComp);
-            inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
-        }
-        if ((*secondComp)->getType() == Component::Type::OUTPUT)
-        {
-            auto *outputComp = static_cast<LogicGate *>(*secondComp);
-            inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
-        }
-        /*
-        auto *inputComp = static_cast<InputComponent *>(*firstComp);
-        auto *outputComp = static_cast<OutputComponent *>(*secondComp);
-        outputPort = inputComp->getOutputPort();
-        inputPort = outputComp->getInputPortAtIndex(secondCompPortNumber);
-        */
-        if (outputPort->isConnected() || inputPort->isConnected())
+        auto *firstPort = firstComp->getPortAtIndex(firstCompPortNumber);
+        auto *secondPort = secondComp->getPortAtIndex(secondCompPortNumber);
+
+        if (firstPort->isConnected() || secondPort->isConnected() ||
+            (firstPort->isInputType() && secondPort->isInputType()) ||
+            (firstPort->isOutputType() && secondPort->isOutputType()))
         {
             return false;
         }
-        outputPort->connectTo(inputPort);
-        inputPort->connectTo(outputPort);
+        firstPort->connectTo(secondPort);
+        secondPort->connectTo(firstPort);
+        updateCircuit();
         return true;
     }
-    void CircuitManager::update()
+
+    void CircuitManager::updateCircuit()
     {
-        for (auto *comp : m_components)
+        for (auto &comp : m_components)
         {
-            if (comp->getType() == Component::Type::LOGIC_GATE)
+            for (auto &comp : m_components)
             {
-                auto *outputComp = static_cast<LogicGate *>(comp);
-                outputComp->computeOutputState();
-            }
-        }
-        for (auto *comp : m_components)
-        {
-            if (comp->getType() == Component::Type::OUTPUT)
-            {
-                auto *outputComp = static_cast<OutputComponent *>(comp);
-                outputComp->computeOutputState();
+                comp->computeOutputState();
             }
         }
     }
-
-    std::vector<Component *> CircuitManager::getComponentsList()
+    std::vector<Component*> CircuitManager::getComponentsList()
     {
-        return m_components;
-    }
-
-    std::vector<OutputComponent *> CircuitManager::getOutputComponentsList()
-    {
-        std::vector<OutputComponent *> m_outputComponents;
-        for (auto *comp : m_components)
+        std::vector<Component*> comps;
+        for (auto &comp : m_components)
         {
-            if (comp->getType() == Component::Type::OUTPUT)
-            {
-                auto *outputComp = static_cast<OutputComponent *>(comp);
-                m_outputComponents.push_back(outputComp);
-            }
+            comps.push_back(comp.get());
         }
-        return m_outputComponents;
+        return comps;
     }
 }
-
-/*
-
-::startSimluation()
-{
-    m_simulator.start();
-}
-::pauseSimulation()
-{
-    m_simulator.pause();
-}
-
-notifyListeners()
-{
-    for (listeners : listeners)
-    {
-        listener.update();
-    }
-}
-*/

@@ -1,8 +1,9 @@
 #ifndef COMPONENTSFACTORY_H
 #define COMPONENTSFACTORY_H
 
+#include "Core/Circuit/CircuitEnums.h"
 #include "Core/Circuit/Components/component.h"
-#include "Core/Circuit/elementTypeEnum.h"
+#include <memory>
 
 namespace Core::Circuit
 {
@@ -15,7 +16,7 @@ namespace Core::Circuit
         ComponentsFactory &operator=(ComponentsFactory const &&) = delete;
 
         static ComponentsFactory &getInstance();
-        Component *createComponent(ElementType type);
+        std::unique_ptr<Component> createComponent(ElementType type);
 
     private:
         ComponentsFactory() = default;

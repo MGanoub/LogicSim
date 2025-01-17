@@ -1,5 +1,6 @@
 #include "sceneEditor.h"
 #include "Core/Circuit/Managers/circuitManager.h"
+#include "Core/Circuit/Components/component.h"
 #include "UI/disp/Widgets/CircuitElement/elementConnection.h"
 #include "UI/disp/Widgets/CircuitElement/elementFactory.h"
 #include "UI/disp/Widgets/CircuitElement/elementPort.h"
@@ -137,7 +138,7 @@ namespace UI
             auto *inputPort = static_cast<UI::CircuitElements::ElementPort *>(item);
             auto *outputComp = outputPort->getParent();
             auto *inputComp = inputPort->getParent();
-            const auto isConnectionMade = m_circuitManager->addConnection(outputComp->getId(), inputComp->getId(), inputPort->getIndex());
+            const auto isConnectionMade = m_circuitManager->addConnection(outputComp->getId(), outputPort->getIndex(), inputComp->getId(), inputPort->getIndex());
 
             if (!isConnectionMade)
             {
@@ -148,7 +149,7 @@ namespace UI
             m_connectionsList.append(connection);
             resetConnectionStatus();
 
-            m_circuitManager->update();
+            m_circuitManager->updateCircuit();
             updateElementsInScene();
         }
         return true;
@@ -156,14 +157,14 @@ namespace UI
 
     void SceneEditor::updateElementsInScene()
     {
-        const auto outputList = m_circuitManager->getOutputComponentsList();
-        for (auto outputElement : outputList)
+        const auto componentsList = m_circuitManager->getComponentsList();
+        for (auto &component : componentsList)
         {
             auto elementItr = std::find_if(m_circuitElements.begin(), m_circuitElements.end(), [&](UI::CircuitElements::ElementView *element)
-                                           { return (element->getId() == outputElement->getIndentifier()); });
+                                           { return (element->getId() == component->getIndentifier()); });
             if (elementItr != m_circuitElements.end())
             {
-                (*elementItr)->setVisualState(outputElement->getOutState());
+                (*elementItr)->setVisualState(component->getState());
             }
         }
     }

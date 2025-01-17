@@ -1,12 +1,11 @@
 #ifndef VCCInput_H
 #define VCCInput_H
 
-#include "Core/Circuit/Components/Input/inputComponent.h"
-
+#include "Core/Circuit/Components/component.h"
 namespace Core::Circuit
 {
 
-    class VCCInput : public InputComponent
+    class VCCInput : public Component
     {
     public:
         VCCInput();

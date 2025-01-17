@@ -1,6 +1,6 @@
 #ifndef PORT_H
 #define PORT_H
-#include "../elementTypeEnum.h"
+#include "../CircuitEnums.h"
 
 namespace Core::Circuit
 {
@@ -33,6 +33,8 @@ namespace Core::Circuit
         void updateState();
         bool isConnected();
         IComponent *getParentComp();
+        bool isOutputType();
+        bool isInputType();
 
     private:
         State m_state;

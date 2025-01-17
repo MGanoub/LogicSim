@@ -1,5 +1,5 @@
 #include "componentsMenuContainer.h"
-#include "Core/Circuit/elementTypeEnum.h"
+#include "Core/Circuit/CircuitEnums.h"
 #include "UI/disp/Widgets/listItemWidget.h"
 namespace UI
 {

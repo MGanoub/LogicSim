@@ -2,30 +2,35 @@
 #define COMPONENT_H
 
 #include "Core/Circuit/Components/IComponent.h"
+#include <Core/Circuit/CircuitEnums.h>
+#include <vector>
+#include "Core/Circuit/Components/port.h"
 
 namespace Core::Circuit
 {
     class Component : public IComponent
     {
     public:
-        enum class Type
-        {
-            UNDEFINED,
-            INPUT,
-            LOGIC_GATE,
-            OUTPUT
-        };
-        Component() = default;
-        Component(Type type);
-        Component(Component &&other);
+        Component(int inputPortsCount, int outputPortsCount);
+
+        Port *getPortAtIndex(int index) override;
 
         int getIndentifier() override;
-        virtual void setType(Component::Type type);
-        virtual Component::Type getType();
+        State getState() override;
+        void setState(State state) override;
 
-    private:
+        virtual void computeOutputState();
+        bool areAllInputPortsConnected();
+
+    protected:
         int m_identifier;
-        Type m_type;
+        std::vector<Port> m_portsList;
+        int m_inputPortsCount;
+        int m_outputPortsCount;
+        State m_state;
+
+        void createPorts();
+        void updateInputPortsState();
     };
 }
 #endif // COMPONENT_H
