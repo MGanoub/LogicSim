@@ -1,17 +1,23 @@
 #include "componentsMenuContainer.h"
 #include "Core/Circuit/CircuitEnums.h"
+#include "UI/Managers/resourceManager.h"
+#include "UI/Models/componentModel.h"
 #include "UI/disp/Widgets/listItemWidget.h"
 namespace UI
 {
-    ComponentsMenuContainer::ComponentsMenuContainer(QTabWidget *menuTabWidget)
+    ComponentsMenuContainer::ComponentsMenuContainer(ComponentModel *componentModel, QTabWidget *menuTabWidget)
         : m_menuViewWidget(menuTabWidget),
-          m_componentMenuWidget(new UI::CustomWidgets::ComponentsMenuWidget())
+          m_componentModel(componentModel),
+          m_sourceComponentMenuWidget(std::make_unique<UI::CustomWidgets::ComponentsMenuWidget>()),
+          m_gatesComponentMenuWidget(std::make_unique<UI::CustomWidgets::ComponentsMenuWidget>())
     {
-        if (m_menuViewWidget == nullptr || m_componentMenuWidget == nullptr)
+        if (m_menuViewWidget == nullptr || m_sourceComponentMenuWidget == nullptr || m_gatesComponentMenuWidget == nullptr)
         {
             return;
         }
-        m_menuViewWidget->addTab(m_componentMenuWidget, *m_componentMenuWidget->getIcon(), QString());
+        m_menuViewWidget->addTab(m_sourceComponentMenuWidget.get(), QIcon(UI::ResourceManager::getInstance().getSourceCompTabIconPath()), QString());
+        m_menuViewWidget->addTab(m_gatesComponentMenuWidget.get(), QIcon(UI::ResourceManager::getInstance().getLogicGateTabIconPath()), QString());
+
         m_menuViewWidget->setCurrentIndex(ComponentMenuTabIndex::IC_TAB);
 
         populateComponentsMenu();
@@ -19,20 +25,21 @@ namespace UI
 
     void ComponentsMenuContainer::populateComponentsMenu()
     {
-        auto *vccItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/VCC.png"), static_cast<int>(Core::Circuit::ElementType::VCC), QString("VCC"), m_menuViewWidget);
-        auto *gndItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/inputs/GND.png"), static_cast<int>(Core::Circuit::ElementType::GND), QString("GND"), m_menuViewWidget);
+        const auto availableSourceComponents = m_componentModel->getAvailableSourceComponents();
+        const auto availableLogicGateComponents = m_componentModel->getAvailableLogicGateComponents();
+        for (auto component : availableSourceComponents)
+        {
+            const auto resourceInfo = UI::ResourceManager::getInstance().getResourceInformationOf(component);
 
-        auto *ledItem = new UI::CustomWidgets::ListItemWidget(QPixmap(":/outputs/WhiteLedOff.png"), static_cast<int>(Core::Circuit::ElementType::LED), QString("LED"), m_menuViewWidget);
-        auto *andGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/ANDGate.png"), static_cast<int>(Core::Circuit::ElementType::AND_GATE), QString("AND Gate"), m_menuViewWidget);
-        auto *orGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/ORGate.png"), static_cast<int>(Core::Circuit::ElementType::OR_GATE), QString("OR Gate"), m_menuViewWidget);
-        auto *notGate = new UI::CustomWidgets::ListItemWidget(QPixmap(":/LogicGates/NOTGate.png"), static_cast<int>(Core::Circuit::ElementType::NOT_GATE), QString("NOT Gate"), m_menuViewWidget);
-        m_componentMenuWidget->addListItem(vccItem);
-        m_componentMenuWidget->addListItem(gndItem);
-        m_componentMenuWidget->addListItem(ledItem);
-        m_componentMenuWidget->addListItem(andGate);
-        m_componentMenuWidget->addListItem(orGate);
-        m_componentMenuWidget->addListItem(notGate);
+            auto *listItem = new UI::CustomWidgets::ListItemWidget(QPixmap(resourceInfo.offStatePixmapPath), static_cast<int>(component), QString(resourceInfo.displayName), m_menuViewWidget);
+            m_sourceComponentMenuWidget->addListItem(listItem);
+        }
+        for (auto component : availableLogicGateComponents)
+        {
+            const auto resourceInfo = UI::ResourceManager::getInstance().getResourceInformationOf(component);
 
-        m_icTabListItemWidgets.push_back(vccItem);
+            auto *listItem = new UI::CustomWidgets::ListItemWidget(QPixmap(resourceInfo.offStatePixmapPath), static_cast<int>(component), QString(resourceInfo.displayName), m_menuViewWidget);
+            m_gatesComponentMenuWidget->addListItem(listItem);
+        }
     }
 }

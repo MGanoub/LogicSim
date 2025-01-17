@@ -8,5 +8,7 @@
          <file>LogicGates/ANDGate.png</file>
          <file>LogicGates/ORGate.png</file>
          <file>LogicGates/NOTGate.png</file>
+         <file>MenuTabs/sourceTabIcon.png</file>
+         <file>MenuTabs/LogicGatesTabIcon.png</file>
     </qresource>
 </RCC>

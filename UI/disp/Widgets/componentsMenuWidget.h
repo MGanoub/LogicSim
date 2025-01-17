@@ -13,13 +13,11 @@ namespace UI::CustomWidgets
         Q_OBJECT
     public:
         explicit ComponentsMenuWidget(QWidget *parent = nullptr);
-        QIcon *getIcon();
         void addListItem(ListItemWidget *listItemWidget);
 
     private:
         QVBoxLayout *m_verticalLayout;
         QSpacerItem *m_verticalSpacer;
-        QIcon *m_icon;
     };
 }
 

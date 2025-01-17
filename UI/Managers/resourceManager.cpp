@@ -94,4 +94,13 @@ namespace UI
             QString(":/LogicGates/NOTGate.png"),
             QString()};
     }
+
+    QString ResourceManager::getSourceCompTabIconPath()
+    {
+        return {":/MenuTabs/sourceTabIcon.png"};
+    }
+    QString ResourceManager::getLogicGateTabIconPath()
+    {
+        return {":/MenuTabs/LogicGatesTabIcon.png"};
+    }
 }

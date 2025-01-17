@@ -6,7 +6,8 @@ namespace UI
     QtApp::QtApp()
         : m_appArgcount(0),
           m_app(std::make_unique<QApplication>(m_appArgcount, nullptr)),
-          m_mainGuiContainer(std::make_unique<MainGuiContainer>())
+          m_componentModel(),
+          m_mainGuiContainer(std::make_unique<MainGuiContainer>(&m_componentModel))
     {
     }
 

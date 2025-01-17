@@ -1,6 +1,7 @@
 #ifndef QTAPP_H
 #define QTAPP_H
 
+#include "UI/Models/componentModel.h"
 #include <QApplication>
 #include <QObject>
 #include <memory>
@@ -25,6 +26,7 @@ namespace UI
         std::unique_ptr<QApplication> m_app;
         int m_appArgcount;
         std::unique_ptr<MainGuiContainer> m_mainGuiContainer;
+        ComponentModel m_componentModel;
     };
 }
 

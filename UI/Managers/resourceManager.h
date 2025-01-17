@@ -22,6 +22,8 @@ namespace UI
 
         static ResourceManager &getInstance();
         ResourceInfo getResourceInformationOf(Core::Circuit::ElementType type);
+        QString getSourceCompTabIconPath();
+        QString getLogicGateTabIconPath();
 
     private:
         ResourceManager() = default;

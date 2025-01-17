@@ -4,9 +4,11 @@
 #include "UI/disp/Widgets/componentsMenuWidget.h"
 #include "UI/disp/Widgets/listItemWidget.h"
 #include <QTabWidget>
+#include <memory>
 
 namespace UI
 {
+    class ComponentModel;
     class ComponentsMenuContainer
     {
     public:
@@ -15,12 +17,15 @@ namespace UI
             IC_TAB,
             LOGIC_TAB
         };
-        ComponentsMenuContainer(QTabWidget *menuTabWidget);
+        ComponentsMenuContainer(ComponentModel *componentModel, QTabWidget *menuTabWidget);
 
     private:
         QTabWidget *m_menuViewWidget;
-        UI::CustomWidgets::ComponentsMenuWidget *m_componentMenuWidget;
-        std::vector<UI::CustomWidgets::ListItemWidget *> m_icTabListItemWidgets;
+        std::unique_ptr<UI::CustomWidgets::ComponentsMenuWidget> m_sourceComponentMenuWidget;
+        std::unique_ptr<UI::CustomWidgets::ComponentsMenuWidget> m_gatesComponentMenuWidget;
+        // TODO:: do a search widget for searching elements
+        // std::vector<UI::CustomWidgets::ListItemWidget *> m_icTabListItemWidgets;
+        ComponentModel *m_componentModel;
         void populateComponentsMenu();
     };
 }

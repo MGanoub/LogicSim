@@ -8,10 +8,11 @@
 
 namespace UI
 {
+    class ComponentModel;
     class MainGuiContainer
     {
     public:
-        MainGuiContainer();
+        MainGuiContainer(ComponentModel *componentModel);
         void showMainWindow();
 
     private:
