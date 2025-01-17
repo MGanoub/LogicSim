@@ -10,6 +10,6 @@ namespace UI::CircuitElements
 
     void GNDView::setVisualState(Core::Circuit::State state)
     {
-        setPixmap(":/inputs/GND.png");
+        setPixmap(m_resourceInfo.offStatePixmapPath);
     }
 }

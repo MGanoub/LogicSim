@@ -14,12 +14,12 @@ namespace UI::CircuitElements
         {
         case Core::Circuit::State::ON:
         {
-            setPixmap(":/outputs/WhiteLedOn.png");
+            setPixmap(m_resourceInfo.OnStatePixmapPath);
             break;
         }
         case Core::Circuit::State::OFF:
         {
-            setPixmap(":/outputs/WhiteLedOff.png");
+            setPixmap(m_resourceInfo.offStatePixmapPath);
             break;
         }
         default:

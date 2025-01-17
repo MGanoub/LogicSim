@@ -2,6 +2,7 @@
 #define ELEMENTVIEW_H
 
 #include "Core/Circuit/CircuitEnums.h"
+#include "UI/Managers/resourceManager.h"
 #include <QGraphicsObject>
 
 namespace UI::CircuitElements
@@ -29,6 +30,9 @@ namespace UI::CircuitElements
         {
             return Type;
         }
+
+    protected:
+        ResourceManager::ResourceInfo m_resourceInfo;
 
     private:
         Core::Circuit::ElementType m_type;

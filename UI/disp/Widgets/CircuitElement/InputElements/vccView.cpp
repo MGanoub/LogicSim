@@ -10,6 +10,6 @@ namespace UI::CircuitElements
 
     void VCCView::setVisualState(Core::Circuit::State state)
     {
-        setPixmap(":/inputs/VCC.png");
+        setPixmap(m_resourceInfo.OnStatePixmapPath);
     }
 }

@@ -10,6 +10,6 @@ namespace UI::CircuitElements
 
     void ORGateView::setVisualState(Core::Circuit::State state)
     {
-        setPixmap(":/LogicGates/ORGate.png");
+        setPixmap(m_resourceInfo.OnStatePixmapPath);
     }
 }

@@ -13,7 +13,8 @@ namespace UI::CircuitElements
           m_identifier(identifier),
           m_pixmapWidth(64),
           m_pixmapHeight(64),
-          m_maxPortsToDisplayOnOneSide(6)
+          m_maxPortsToDisplayOnOneSide(6),
+          m_resourceInfo(ResourceManager::getInstance().getResourceInformationOf(type))
     {
         setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         addPorts();

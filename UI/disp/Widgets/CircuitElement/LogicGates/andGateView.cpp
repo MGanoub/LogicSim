@@ -10,6 +10,6 @@ namespace UI::CircuitElements
 
     void ANDGateView::setVisualState(Core::Circuit::State state)
     {
-        setPixmap(":/LogicGates/ANDGate.png");
+        setPixmap(m_resourceInfo.OnStatePixmapPath);
     }
 }

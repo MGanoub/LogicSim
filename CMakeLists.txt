@@ -62,6 +62,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Core/Circuit/Components/Input/gndInput.h Core/Circuit/Components/Input/gndInput.cpp
         Core/Circuit/Components/LogicGate/notGate.h Core/Circuit/Components/LogicGate/notGate.cpp
         UI/disp/Widgets/CircuitElement/LogicGates/notGateView.h UI/disp/Widgets/CircuitElement/LogicGates/notGateView.cpp
+        UI/Managers/resourceManager.h UI/Managers/resourceManager.cpp
 
 
     )

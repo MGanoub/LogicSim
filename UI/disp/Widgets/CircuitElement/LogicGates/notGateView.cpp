@@ -10,6 +10,6 @@ namespace UI::CircuitElements
 
     void NOTGateView::setVisualState(Core::Circuit::State state)
     {
-        setPixmap(":/LogicGates/NOTGate.png");
+        setPixmap(m_resourceInfo.OnStatePixmapPath);
     }
 }
