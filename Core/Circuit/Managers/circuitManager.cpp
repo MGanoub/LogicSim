@@ -63,6 +63,19 @@ namespace Core::Circuit
         return true;
     }
 
+    bool CircuitManager::removeComponent(int compIdentifier)
+    {
+        std::vector<std::unique_ptr<Component>>::iterator componentItr = std::find_if(m_components.begin(), m_components.end(),
+                                                                                      [&](std::unique_ptr<Component> &comp)
+                                                                                      { return comp->getIndentifier() == compIdentifier; });
+        if (componentItr == m_components.end())
+        {
+            return false;
+        }
+        m_components.erase(componentItr);
+        return true;
+    }
+
     bool CircuitManager::removeConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber)
     {
         auto *firstComp = getComponentById(firstCompIdent);

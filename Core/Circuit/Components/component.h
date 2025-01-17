@@ -2,9 +2,9 @@
 #define COMPONENT_H
 
 #include "Core/Circuit/Components/IComponent.h"
+#include "Core/Circuit/Components/port.h"
 #include <Core/Circuit/CircuitEnums.h>
 #include <vector>
-#include "Core/Circuit/Components/port.h"
 
 namespace Core::Circuit
 {

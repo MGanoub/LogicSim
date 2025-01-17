@@ -27,6 +27,8 @@ namespace UI::CircuitElements
         void updatePath();
         void makeConnection(ElementPort *ConnectionItem);
 
+        bool isConnectedWith(int identifier);
+
         int type() const override
         {
             return Type;

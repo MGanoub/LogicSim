@@ -15,6 +15,7 @@ namespace Core::Circuit
         ~CircuitManager();
 
         int addComponent(ElementType type);
+        bool removeComponent(int compIdentifier);
         bool addConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);
         void updateCircuit();
         bool removeConnection(int firstCompIdent, int firstCompPortNumber, int secondCompIdent, int secondCompPortNumber);

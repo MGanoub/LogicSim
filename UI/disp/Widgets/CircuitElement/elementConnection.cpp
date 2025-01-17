@@ -86,4 +86,12 @@ namespace UI::CircuitElements
         setEndPort(connectionItem);
     }
 
+    bool ElementConnection::isConnectedWith(int identifier)
+    {
+        if (m_startPort == nullptr || m_endPort == nullptr)
+        {
+            return false;
+        }
+        return (m_startPort->getParent()->getId() == identifier) || (m_endPort->getParent()->getId() == identifier);
+    }
 }

@@ -50,7 +50,10 @@ namespace Core::Circuit
         }
         m_otherConnectedPort = nullptr;
         m_isConnected = false;
-        m_state= State::OFF;
+        if (isInputType())
+        {
+            m_state = State::OFF;
+        }
     }
 
     bool Port::isConnected()

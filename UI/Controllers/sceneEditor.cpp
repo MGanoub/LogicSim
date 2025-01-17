@@ -101,6 +101,18 @@ namespace UI
         {
             m_scene->clearSelection();
             item->setSelected(true);
+
+            if (item->type() == UI::CircuitElements::ElementView::Type)
+            {
+                auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
+                for (auto *connection : m_connectionsList)
+                {
+                    if (connection->isConnectedWith(element->getId()))
+                    {
+                        connection->setSelected(true);
+                    }
+                }
+            }
             m_isItemSelected = true;
         }
         return true;
@@ -134,15 +146,22 @@ namespace UI
         }
         if (m_isItemSelected)
         {
-            auto item = m_scene->selectedItems().first();
-            if (item->type() == UI::CircuitElements::ElementView::Type)
+            bool isElementSelected = false;
+            for(auto* item : m_scene->selectedItems())
             {
-                item->setPos(mousePos);
+                if (item->type() == UI::CircuitElements::ElementView::Type)
+                {
+                    isElementSelected = true;
+                    item->setPos(mousePos);
+                }
             }
-            for (auto *connection : m_connectionsList)
+            if(isElementSelected)
             {
-                connection->updatePath();
-                connection->update();
+                for (auto *connection : m_connectionsList)
+                {
+                    connection->updatePath();
+                    connection->update();
+                }
             }
         }
         return true;
@@ -157,7 +176,7 @@ namespace UI
             auto *item = getSceneItemAtPos(mousePos);
             if (item->type() != UI::CircuitElements::ElementPort::GraphicalType)
             {
-                removeConnection();
+                removeConnectionInEdit();
                 return true;
             }
             auto *connection = getConnectionInEdit();
@@ -169,7 +188,7 @@ namespace UI
 
             if (!isConnectionMade)
             {
-                removeConnection();
+                removeConnectionInEdit();
                 return true;
             }
             connection->makeConnection(inputPort);
@@ -200,7 +219,7 @@ namespace UI
         m_connection = nullptr;
         m_isWireConnectionInProgress = false;
     }
-    void SceneEditor::removeConnection()
+    void SceneEditor::removeConnectionInEdit()
     {
         auto *connection = getConnectionInEdit();
         m_scene->removeItem(connection);
@@ -214,26 +233,49 @@ namespace UI
         auto *keyPressedEvent = dynamic_cast<QKeyEvent *>(event);
         if (keyPressedEvent->key() == Qt::Key_Delete && m_isItemSelected)
         {
-            auto *item = m_scene->selectedItems().first();
-            if (item->type() == UI::CircuitElements::ElementConnection::Type)
+            for (auto *item : m_scene->selectedItems())
             {
-                auto *connection = static_cast<UI::CircuitElements::ElementConnection *>(item);
-                auto *startPort = connection->getStartPort();
-                auto *endPort = connection->getEndPort();
-                const auto firstPortParent = startPort->getParent();
-                const auto secondPortParent = endPort->getParent();
-                bool isConnectionRemoved = m_circuitManager->removeConnection(firstPortParent->getId(), startPort->getIndex(), secondPortParent->getId(), endPort->getIndex());
-                if (isConnectionRemoved)
+                if (item->type() == UI::CircuitElements::ElementConnection::Type)
                 {
-                    m_scene->removeItem(connection);
-                    m_connectionsList.removeOne(connection);
-                    delete connection;
-                    updateElementsInScene();
+                    auto *connection = static_cast<UI::CircuitElements::ElementConnection *>(item);
+                    removeConnection(connection);
                 }
             }
-            return true;
+            for (auto *item : m_scene->selectedItems())
+            {
+                if (item->type() == UI::CircuitElements::ElementView::Type)
+                {
+                    auto *element = static_cast<UI::CircuitElements::ElementView *>(item);
+                    removeElement(element);
+                }
+            }
+            updateElementsInScene();
         }
         return true;
+    }
+    void SceneEditor::removeConnection(UI::CircuitElements::ElementConnection *connection)
+    {
+        auto *startPort = connection->getStartPort();
+        auto *endPort = connection->getEndPort();
+        const auto firstPortParent = startPort->getParent();
+        const auto secondPortParent = endPort->getParent();
+        bool isConnectionRemoved = m_circuitManager->removeConnection(firstPortParent->getId(), startPort->getIndex(), secondPortParent->getId(), endPort->getIndex());
+        if (isConnectionRemoved)
+        {
+            m_scene->removeItem(connection);
+            m_connectionsList.removeOne(connection);
+            delete connection;
+        }
+    }
+    void SceneEditor::removeElement(UI::CircuitElements::ElementView *element)
+    {
+        bool isElementRemoved = m_circuitManager->removeComponent(element->getId());
+        if (isElementRemoved)
+        {
+            m_scene->removeItem(element);
+            std::remove(m_circuitElements.begin(), m_circuitElements.end(), element);
+            delete element;
+        }
     }
 
     bool SceneEditor::handleDropEvent(QEvent *event)

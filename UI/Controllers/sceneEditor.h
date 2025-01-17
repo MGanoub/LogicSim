@@ -46,7 +46,9 @@ namespace UI
         bool isItemAnElementPort(QGraphicsItem *item);
 
         void setConnectionInEdit(UI::CircuitElements::ElementConnection *connection);
-        void removeConnection();
+        void removeConnectionInEdit();
+        void removeConnection(UI::CircuitElements::ElementConnection *connection);
+        void removeElement(UI::CircuitElements::ElementView *element);
         bool hasConnectionStarted();
         UI::CircuitElements::ElementConnection *getConnectionInEdit();
         void resetConnectionStatus();
