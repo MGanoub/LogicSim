@@ -2,12 +2,12 @@
 #define SCENEEDITOR_H
 
 #include "Common/IObserver.h"
+#include "Core/Circuit/CircuitEnums.h"
 #include "UI/disp/Widgets/sceneWidget.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QObject>
 #include <vector>
-#include "Core/Circuit/CircuitEnums.h"
 
 namespace Core::Circuit
 {
@@ -27,6 +27,7 @@ namespace UI
         {
             INITIAL,
             ELEMENT_SELECTED,
+            ELEMENT_SELECTED_AND_PRESSED,
             CONNECTION_STARTED
         };
 

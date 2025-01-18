@@ -114,6 +114,7 @@ namespace UI
                 {
                     m_pressedElement = element;
                     updateElementState(element, Core::Circuit::State::ON);
+                    m_currentEventState = EventState::ELEMENT_SELECTED_AND_PRESSED;
                 }
                 selectElementConnections(item);
             }
@@ -162,7 +163,8 @@ namespace UI
             connection->setEndPos(mousePos);
             connection->updatePath();
         }
-        else if (m_currentEventState == EventState::ELEMENT_SELECTED)
+        else if (m_currentEventState == EventState::ELEMENT_SELECTED ||
+                 m_currentEventState == EventState::ELEMENT_SELECTED_AND_PRESSED)
         {
             bool isElementSelected = false;
             for (auto *item : m_scene->selectedItems())
@@ -200,9 +202,10 @@ namespace UI
             addConnection(item);
             m_currentEventState = EventState::INITIAL;
         }
-        else if (m_currentEventState == EventState::ELEMENT_SELECTED)
+        else if (m_currentEventState == EventState::ELEMENT_SELECTED_AND_PRESSED)
         {
             updateElementState(m_pressedElement, Core::Circuit::State::OFF);
+            m_currentEventState = EventState::ELEMENT_SELECTED;
         }
         return true;
     }
