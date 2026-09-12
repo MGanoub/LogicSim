@@ -4,7 +4,7 @@ A digital logic circuit simulator built in C++ with Qt. Drag logic gates and inp
 
 ## Aim
 
-A practice project intended as a learning platform for small children/future engineers, to learn the basics of electronics and logic gates through hands-on, visual experimentation rather than abstract theory.
+A practice project intended as a learning platform for small children(future engineers), to learn the basics of electronics and logic gates through hands-on, visual experimentation rather than abstract theory.
 
 ![canvas_presentation2](https://github.com/user-attachments/assets/05321547-721c-4c20-af89-cc9e026db23a)
 
