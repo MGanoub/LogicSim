@@ -10,8 +10,8 @@ A practice project intended as a learning platform for small children/future eng
 
 ## Features
 
-- **Interactive circuit canvas** — drag components from a palette, drop them onto the scene, and connect ports by clicking between them
-- **Live simulation** — component states update and propagate through the circuit automatically whenever a connection or input changes
+- **Interactive circuit canvas**: drag components from a palette, drop them onto the scene, and connect ports by clicking between them
+- **Live simulation**: component states update and propagate through the circuit automatically whenever a connection or input changes
 - **Supported components:**
   - Inputs: VCC, GND, push button
   - Logic gates: AND, OR, NOT
@@ -19,7 +19,7 @@ A practice project intended as a learning platform for small children/future eng
 
 ## Architecture
 
-The simulation core is fully decoupled from the UI — `Core/Circuit` contains no Qt dependencies at all, so the logic can be reasoned about (and tested) independently of how it's rendered.
+The simulation core is fully decoupled from the UI `Core/Circuit` contains no Qt dependencies at all, so the logic can be reasoned about (and tested) independently of how it's rendered.
 
 ```
 Core/Circuit/
