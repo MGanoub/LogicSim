@@ -79,7 +79,3 @@ Or open `CMakeLists.txt` directly in Qt Creator and build from there.
 - [ ] Unit tests for `CircuitManager` and component evaluation logic
 - [ ] Additional logic gates (NAND, NOR, XOR, XNOR)
 - [ ] Save/load circuits to file
-
-## License
-
-All rights reserved.
